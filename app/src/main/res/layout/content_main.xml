@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Otros elementos comunes -->
+
+    <RelativeLayout
+        android:id="@+id/content_main_overlay_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Aquí van los otros elementos -->
+
+        <ProgressBar
+            android:id="@+id/content_main_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <!-- Navigation bar -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionBarSize"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:paddingVertical="@dimen/spacing_medium">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <!-- home -->
+            <LinearLayout
+                android:id="@+id/nav_menu_home"
+                android:layout_width="0dp"
+                android:layout_height="?android:attr/actionBarSize"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    app:srcCompat="@drawable/ic_home_outline"
+                    app:tint="@color/blue_900" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="@string/home_navbar_button"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="8sp"
+                    app:fontFamily="sans-serif-medium" />
+
+            </LinearLayout>
+
+            <!-- destinations -->
+            <LinearLayout
+                android:id="@+id/nav_menu_destinations"
+                android:layout_width="0dp"
+                android:layout_height="?android:attr/actionBarSize"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    app:srcCompat="@drawable/ic_travel_explore"
+                    app:tint="@color/blue_900" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="@string/destination_navbar_button"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="8sp"
+                    app:fontFamily="sans-serif-medium" />
+
+            </LinearLayout>
+
+            <!-- categories -->
+            <LinearLayout
+                android:id="@+id/nav_menu_categories"
+                android:layout_width="0dp"
+                android:layout_height="?android:attr/actionBarSize"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    app:srcCompat="@drawable/ic_label"
+                    app:tint="@color/blue_900" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="@string/category_navbar_button"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="8sp"
+                    app:fontFamily="sans-serif-medium" />
+
+            </LinearLayout>
+
+            <!-- wishlist -->
+            <LinearLayout
+                android:id="@+id/nav_menu_wishlist"
+                android:layout_width="0dp"
+                android:layout_height="?android:attr/actionBarSize"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    app:srcCompat="@drawable/ic_favorite_border"
+                    app:tint="@color/blue_900" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="@string/wishlist_navbar_button"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="8sp"
+                    app:fontFamily="sans-serif-medium" />
+
+            </LinearLayout>
+
+            <!-- profile -->
+            <LinearLayout
+                android:id="@+id/nav_menu_profile"
+                android:layout_width="0dp"
+                android:layout_height="?android:attr/actionBarSize"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    app:srcCompat="@drawable/ic_account_circle_outline"
+                    app:tint="@color/blue_900" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="@string/profile_navbar_button"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="8sp"
+                    app:fontFamily="sans-serif-medium" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+</FrameLayout>
