@@ -8,6 +8,8 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.randomx.travel.R
 import com.randomx.travel.activity.category.CategoryHomeActivity
 import com.randomx.travel.activity.destination.DestinationHomeActivity
@@ -30,6 +32,11 @@ abstract class BaseActivity : AppCompatActivity() {
     private lateinit var _navbarProfile: LinearLayout
     private var _navbarLoaded: Boolean = false
     private var _exitTime: Long = 0
+    protected lateinit var bottomSheetLayout: LinearLayout
+    protected lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
+    protected lateinit var buttonShowBottomSheet: Button
+    protected lateinit var profileOverlay: View
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,8 +118,78 @@ abstract class BaseActivity : AppCompatActivity() {
             ToolsUtils.goToActivity(this, WishlistHomeActivity::class.java, clearStack)
         }
 
+        _navbarProfile.setOnClickListener {
+
+            showBottomSheet()
+
+        }
+
     }
 
+    protected fun initBottomSheet()
+    {
+
+        if (R.id.bottomSheetLayout == 0 || findViewById<LinearLayout>(R.id.bottomSheetLayout) === null) {
+            return
+        }
+
+        if (!::bottomSheetLayout.isInitialized)
+        {
+            bottomSheetLayout = findViewById(R.id.bottomSheetLayout)
+        }
+
+        if (!::bottomSheetBehavior.isInitialized)
+        {
+            bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout)
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        }
+
+        if (!::profileOverlay.isInitialized)
+        {
+            profileOverlay = findViewById(R.id.profile_overlay)
+
+            profileOverlay.setOnClickListener {
+                hideBottomSheet()
+            }
+        }
+
+    }
+    private fun showBottomSheet() {
+
+        initBottomSheet();
+
+        if (!::bottomSheetBehavior.isInitialized)
+        {
+            return
+        }
+
+        // Mostrar el overlay
+        profileOverlay.visibility = View.VISIBLE
+
+        // Configurar el comportamiento del bottom sheet
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+
+        // Mostrar el bottom sheet como un diálogo
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.CustomBottomSheetDialogTheme)
+        bottomSheetDialog.setContentView(R.layout.profile_dialog_bottom_sheet_layout)
+        bottomSheetDialog.setOnDismissListener {
+            hideBottomSheet()
+        }
+        bottomSheetDialog.show()
+    }
+
+    private fun hideBottomSheet()
+    {
+        if (!::bottomSheetBehavior.isInitialized)
+        {
+            return
+        }
+        // Ocultar el overlay
+        profileOverlay.visibility = View.GONE
+
+        // Ocultar el bottom sheet
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+    }
     private fun getProgressBar():ProgressBar {
         if (!::_progressBar.isInitialized) {
             _progressBar = findViewById(R.id.content_main_progress_bar)

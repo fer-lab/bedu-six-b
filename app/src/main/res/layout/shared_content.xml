@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Otros elementos comunes -->
+
+    <View
+        android:id="@+id/profile_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/overlay_light_5"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <RelativeLayout
         android:id="@+id/content_main_overlay_container"
@@ -21,6 +32,10 @@
             android:visibility="gone" />
 
     </RelativeLayout>
+
+    <!-- user properties -->
+
+
 
     <!-- Navigation bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -184,6 +199,15 @@
 
         </LinearLayout>
 
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/navigation_bar"
+            />
+
     </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
 
 </FrameLayout>

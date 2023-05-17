@@ -3,11 +3,9 @@ package com.randomx.travel.utils
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
-import android.widget.Toast
 import android.os.Handler
 import android.os.HandlerThread
-import android.view.LayoutInflater
-import android.widget.TextView
+import android.widget.Toast
 import com.randomx.travel.R
 
 object DialogUtils {

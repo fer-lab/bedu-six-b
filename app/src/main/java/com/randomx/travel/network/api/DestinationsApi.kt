@@ -1,7 +1,7 @@
 package com.randomx.travel.network.api
 
-import com.randomx.travel.model.destination.DestinationModel
 import com.randomx.travel.model.ProductModel
+import com.randomx.travel.model.destination.DestinationModel
 import com.randomx.travel.network.ApiResponse
 import retrofit2.Response
 import retrofit2.http.GET

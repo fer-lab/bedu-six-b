@@ -2,10 +2,7 @@ package com.randomx.travel.utils
 
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
-import androidx.core.content.ContextCompat.startActivity
-import com.randomx.travel.activity.MainActivity
 import com.randomx.travel.model.UserModel
 
 object UserSessionUtils {
