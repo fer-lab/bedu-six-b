@@ -15,7 +15,7 @@ interface CategoriesApi {
     @GET("categories")
     suspend fun getAll(): Response<ApiResponse<List<CategoryModel>>>
 
-    @GET("destinations/random/{items}")
+    @GET("categories/random/{items}")
     suspend fun getRandom(@Path("items") items: Int): Response<ApiResponse<List<CategoryModel>>>
 
     @GET("categories/{id}/products")

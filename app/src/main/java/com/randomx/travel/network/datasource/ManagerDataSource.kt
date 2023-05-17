@@ -2,6 +2,8 @@ package com.randomx.travel.network.datasource
 
 class ManagerDataSource {
     private lateinit var _destinations: DestinationsDataSource
+    private lateinit var _categories: CategoriesDataSource
+    private lateinit var _products: ProductsDataSource
 
     companion object {
         @Volatile
@@ -19,6 +21,18 @@ class ManagerDataSource {
             _destinations = DestinationsDataSource()
         }
         return _destinations
+    }
+    fun categories(): CategoriesDataSource {
+        if (!::_categories.isInitialized) {
+            _categories = CategoriesDataSource()
+        }
+        return _categories
+    }
+    fun products(): ProductsDataSource {
+        if (!::_products.isInitialized) {
+            _products = ProductsDataSource()
+        }
+        return _products
     }
 
 
