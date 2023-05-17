@@ -3,6 +3,7 @@ package com.randomx.travel.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.randomx.travel.model.UserModel
 
 object UserSessionUtils {
@@ -19,6 +20,7 @@ object UserSessionUtils {
     }
 
     fun setUser(user: UserModel) {
+        Log.d("UserSessionUtils", "setUser: $user")
         val editor = sharedPreferences.edit()
         editor.putString(KEY_NAME, user.name)
         editor.putString(KEY_LAST_NAME, user.lastName)
@@ -32,6 +34,7 @@ object UserSessionUtils {
         val lastName = sharedPreferences.getString(KEY_LAST_NAME, null)
         val email = sharedPreferences.getString(KEY_EMAIL, null)
 
+        Log.d("UserSessionUtils", "getUser: $name $lastName $email")
         return UserModel(name, lastName, email, null, null)
     }
 

@@ -2,20 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group
-        android:id="@+id/grp_2"
+        android:id="@+id/profile_group"
         android:checkableBehavior="single">
         <item
             android:id="@+id/profile_menu_my_account"
-            android:icon="@drawable/ic_home_outline"
+            android:icon="@drawable/ic_account"
             android:title="@string/profile_menu_my_account" />
         <item
             android:id="@+id/profile_menu_orders"
-            android:icon="@drawable/ic_home_outline"
+            android:icon="@drawable/ic_receipt"
             android:title="@string/profile_menu_orders" />
         <item
             android:id="@+id/profile_menu_sign_out"
-            android:icon="@drawable/ic_home_outline"
+            android:icon="@drawable/ic_logout"
             android:title="@string/profile_menu_sign_out" />
+        <item
+            android:id="@+id/profile_menu_exit"
+            android:icon="@drawable/ic_exit"
+            android:title="@string/profile_menu_exit" />
     </group>
 
 </menu>

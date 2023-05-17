@@ -53,6 +53,10 @@ object DialogUtils {
 
         showErrorDialog(context, message ?: "Not implemented yet");
     }
+    fun toastNotImplemented(context: Context, message: String? = null) {
+
+        toast(context, message ?: "Not implemented yet");
+    }
 
     fun showSuccessDialog(context: Context, message: String, title: String? = null) {
         val alertDialogBuilder = AlertDialog.Builder(context, R.style.AlertDialogSuccess)
@@ -64,6 +68,11 @@ object DialogUtils {
 
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
+    }
+
+    fun toast(context: Context, message: String)
+    {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     fun toastThenActivity(context: Context, destinationClass: Class<*>, message: String)

@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/spacing_medium"
-            app:headerLayout="@layout/profile_dialog_bottom_sheet_content"
             app:itemIconTint="@color/grey_60"
             app:itemTextColor="@color/grey_90"
             app:menu="@menu/profile_menu" />

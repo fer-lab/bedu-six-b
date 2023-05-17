@@ -25,6 +25,7 @@
     <string name="system_no_internet">No internet connections found. Check your connection or try again</string>
     <string name="system_no_internet_whoops">Whoops!</string>
     <string name="system_exit_warning">Press again to exit app</string>
+    <string name="system_logout_success">Logout successful.</string>
 
 
     <!-- Login -->
@@ -48,6 +49,12 @@
     <string name="logout">Logout</string>
     <string name="logout_message">Are you sure you want to logout?</string>
     <string name="logout_success">Logout successful.</string>
+
+    <!-- Profile -->
+    <string name="profile_menu_my_account">My Account</string>
+    <string name="profile_menu_orders">My Trips</string>
+    <string name="profile_menu_sign_out">Sign Out</string>
+    <string name="profile_menu_exit">Exit</string>
 
 
     <!-- Button Labels -->
@@ -174,9 +181,6 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
-    <string name="profile_menu_my_account">My Account</string>
-    <string name="profile_menu_orders">Inbox</string>
-    <string name="profile_menu_sign_out">Priority inbox</string>
 
 
 </resources>

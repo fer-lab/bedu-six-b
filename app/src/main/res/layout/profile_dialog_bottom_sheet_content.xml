@@ -16,17 +16,17 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/profile_label_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mail"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/grey_100_"
             app:fontFamily="sans-serif-medium" />
 
         <TextView
+            android:id="@+id/profile_label_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="miller.wilson@mail.comxxx"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@color/grey_40" />
 
@@ -35,7 +35,7 @@
     <ImageView
         android:layout_width="@dimen/spacing_xmlarge"
         android:layout_height="@dimen/spacing_xmlarge"
-        app:srcCompat="@drawable/ic_account_circle_outline"
+        app:srcCompat="@drawable/ic_account"
         app:tint="@color/grey_40" />
 
 </LinearLayout>

@@ -77,7 +77,7 @@ class LoginScreen : AppCompatActivity() {
 
     private fun setupListeners() {
         forgotPassword.setOnClickListener {
-            DialogUtils.showErrorNotImplemented(this)
+            DialogUtils.toastNotImplemented(this)
         }
 
         signupButton.setOnClickListener {

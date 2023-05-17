@@ -2,21 +2,30 @@ package com.randomx.travel.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.navigation.NavigationView
 import com.randomx.travel.R
 import com.randomx.travel.activity.category.CategoryHomeActivity
 import com.randomx.travel.activity.destination.DestinationHomeActivity
 import com.randomx.travel.activity.error.InternetErrorActivity
 import com.randomx.travel.activity.home.HomeActivity
+import com.randomx.travel.activity.profile.OrderActivity
+import com.randomx.travel.activity.profile.ProfileActivity
 import com.randomx.travel.activity.wishlist.WishlistHomeActivity
+import com.randomx.travel.model.UserModel
+import com.randomx.travel.utils.DialogUtils
 import com.randomx.travel.utils.ToolsUtils
+import com.randomx.travel.utils.UserSessionUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -35,7 +44,9 @@ abstract class BaseActivity : AppCompatActivity() {
     protected lateinit var bottomSheetLayout: LinearLayout
     protected lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     protected lateinit var buttonShowBottomSheet: Button
+    protected lateinit var bottomSheetDialog: BottomSheetDialog
     protected lateinit var profileOverlay: View
+    protected lateinit var user: UserModel
 
 
 
@@ -153,6 +164,66 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
 
+        if (!::bottomSheetDialog.isInitialized)
+        {
+
+            bottomSheetDialog = BottomSheetDialog(this, R.style.CustomBottomSheetDialogTheme)
+            bottomSheetDialog.setContentView(R.layout.profile_dialog_bottom_sheet_layout)
+            bottomSheetDialog.setOnDismissListener {
+                hideBottomSheet()
+            }
+
+            val headerView = LayoutInflater.from(this).inflate(R.layout.profile_dialog_bottom_sheet_content, null)
+            val userName = headerView.findViewById<TextView>(R.id.profile_label_name)
+            val userEmail = headerView.findViewById<TextView>(R.id.profile_label_email)
+
+            userName.text = currentUser().name
+            userEmail.text = currentUser().email
+
+            val navigationView = bottomSheetDialog.findViewById<NavigationView>(R.id.navigationView)
+
+            if (navigationView !== null)
+            {
+                navigationView.addHeaderView(headerView)
+
+                navigationView.setNavigationItemSelectedListener { menuItem ->
+                    hideBottomSheet()
+                    menuItem.isChecked = false
+
+                    when (menuItem.itemId) {
+                        R.id.profile_menu_my_account -> {
+                            ToolsUtils.goToActivity(this, ProfileActivity::class.java)
+                        }
+                        R.id.profile_menu_orders -> {
+                            ToolsUtils.goToActivity(this, OrderActivity::class.java)
+                        }
+                        R.id.profile_menu_sign_out -> {
+
+                            showProgressBar()
+                            performLongOperation {
+                                runOnUiThread {
+                                    UserSessionUtils.clearUser()
+                                    hideProgressBar()
+                                    DialogUtils.toast(this, getString(R.string.system_logout_success))
+                                    ToolsUtils.goToHome(this, true)
+                                }
+                            }
+                        }
+                        R.id.profile_menu_exit -> {
+                            System.exit(0)
+                        }
+                        else -> {
+                            DialogUtils.toast(this, "Unknown option")
+                        }
+                    }
+                    false
+                }
+
+            }
+
+
+        }
+
     }
     private fun showBottomSheet() {
 
@@ -166,29 +237,27 @@ abstract class BaseActivity : AppCompatActivity() {
         // Mostrar el overlay
         profileOverlay.visibility = View.VISIBLE
 
-        // Configurar el comportamiento del bottom sheet
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-
-        // Mostrar el bottom sheet como un diálogo
-        val bottomSheetDialog = BottomSheetDialog(this, R.style.CustomBottomSheetDialogTheme)
-        bottomSheetDialog.setContentView(R.layout.profile_dialog_bottom_sheet_layout)
-        bottomSheetDialog.setOnDismissListener {
-            hideBottomSheet()
-        }
         bottomSheetDialog.show()
     }
 
     private fun hideBottomSheet()
     {
+
         if (!::bottomSheetBehavior.isInitialized)
         {
             return
         }
+
+        Log.d("hideBottomSheet", "hideBottomSheet")
+
         // Ocultar el overlay
         profileOverlay.visibility = View.GONE
 
         // Ocultar el bottom sheet
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+        bottomSheetDialog.dismiss()
     }
     private fun getProgressBar():ProgressBar {
         if (!::_progressBar.isInitialized) {
@@ -214,6 +283,18 @@ abstract class BaseActivity : AppCompatActivity() {
 
     }
 
+    protected fun currentUser(): UserModel
+    {
+        if (!::user.isInitialized)
+        {
+            user = UserSessionUtils.getUser()
+            Log.d("User", user.toString())
+        }
+
+
+        return user
+    }
+
     protected fun disableButton(button: Button)
     {
         // disable button
@@ -230,7 +311,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
         Thread {
 
-            Thread.sleep(3000)
+            Thread.sleep(1000)
             callback.invoke()
         }.start()
     }
