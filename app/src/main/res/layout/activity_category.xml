@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.category.CategoryHomeActivity">
+    tools:context=".activity.category.CategoryActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,9 +11,15 @@
         android:layout_marginBottom="@dimen/actionBarSize"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/categories_home_recycler_view"
+            android:id="@+id/categories_product_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_medium"

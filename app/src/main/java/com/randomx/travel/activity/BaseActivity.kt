@@ -1,6 +1,10 @@
 package com.randomx.travel.activity
 
+import android.app.ActivityManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +13,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -23,6 +27,10 @@ import com.randomx.travel.activity.profile.OrderActivity
 import com.randomx.travel.activity.profile.ProfileActivity
 import com.randomx.travel.activity.wishlist.WishlistHomeActivity
 import com.randomx.travel.model.UserModel
+import com.randomx.travel.network.datasource.CategoriesDataSource
+import com.randomx.travel.network.datasource.DestinationsDataSource
+import com.randomx.travel.network.datasource.ManagerDataSource
+import com.randomx.travel.network.datasource.ProductsDataSource
 import com.randomx.travel.utils.DialogUtils
 import com.randomx.travel.utils.ToolsUtils
 import com.randomx.travel.utils.UserSessionUtils
@@ -32,6 +40,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 abstract class BaseActivity : AppCompatActivity() {
+
+    private lateinit var exitConfirmationReceiver: BroadcastReceiver
+    private var exitTime: Long = 0
+    private lateinit var exitConfirmationDialog: AlertDialog
+
 
     private lateinit var _progressBar: ProgressBar
     private lateinit var _navbarHome: LinearLayout
@@ -47,6 +60,7 @@ abstract class BaseActivity : AppCompatActivity() {
     protected lateinit var bottomSheetDialog: BottomSheetDialog
     protected lateinit var profileOverlay: View
     protected lateinit var user: UserModel
+    protected val SWIPE_RANGE = 100
 
 
 
@@ -55,21 +69,60 @@ abstract class BaseActivity : AppCompatActivity() {
 
         checkNetwork()
 
+
+        exitConfirmationReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                showExitConfirmationDialog()
+            }
+        }
+
+        val intentFilter = IntentFilter("com.example.EXIT_CONFIRMATION")
+        registerReceiver(exitConfirmationReceiver, intentFilter)
+
+        exitConfirmationDialog = buildExitConfirmationDialog()
+
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(exitConfirmationReceiver)
+    }
 
     override fun onBackPressed() {
-        doExitApp()
+        // Comprueba si eres la última actividad en la pila
+        val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val appTasks = activityManager.appTasks
+
+        if (appTasks.isNotEmpty()) {
+            val taskInfo = appTasks[0].taskInfo
+            val numActivities = taskInfo.numActivities
+
+            if (numActivities == 1) {
+                // Eres la última actividad en la pila, muestra el diálogo de confirmación
+                showExitConfirmationDialog()
+                return
+            }
+        }
+
+        super.onBackPressed()
     }
 
-    open fun doExitApp() {
-        if (System.currentTimeMillis() - _exitTime > 2000) {
-            Toast.makeText(this, getString(R.string.system_exit_warning), Toast.LENGTH_SHORT).show()
-            _exitTime = System.currentTimeMillis()
-        } else {
+    private fun showExitConfirmationDialog() {
+        exitConfirmationDialog.show()
+    }
+
+    private fun buildExitConfirmationDialog(): AlertDialog {
+
+        return AlertDialog.Builder(this)
+        .setTitle(getString(R.string.exit_confirmation_title))
+        .setPositiveButton(R.string.close) { dialogInterface, i ->
             finish()
         }
+        .setNegativeButton(R.string.cancel, null)
+        .create()
     }
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus && !_navbarLoaded) {
@@ -91,7 +144,7 @@ abstract class BaseActivity : AppCompatActivity() {
         if (_navbarLoaded || R.id.navigation_bar == 0 || findViewById<LinearLayout>(R.id.nav_menu_home) === null) {
             return
         }
-        val clearStack = false;
+        val clearStack = false
 
         _navbarLoaded = true
         _navbarHome = findViewById(R.id.nav_menu_home)
@@ -227,7 +280,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
     private fun showBottomSheet() {
 
-        initBottomSheet();
+        initBottomSheet()
 
         if (!::bottomSheetBehavior.isInitialized)
         {
@@ -264,7 +317,7 @@ abstract class BaseActivity : AppCompatActivity() {
             _progressBar = findViewById(R.id.content_main_progress_bar)
         }
 
-        return _progressBar;
+        return _progressBar
     }
 
     protected fun showProgressBar() {
@@ -316,26 +369,19 @@ abstract class BaseActivity : AppCompatActivity() {
         }.start()
     }
 
-
-    /**
-
-    closeSession.setOnClickListener {
-    showProgressBar()
-    disableButton(closeSession)
-
-    showProgressBar()
-    disableButton(closeSession)
-
-    performLongOperation {
-    runOnUiThread {
-    hideProgressBar()
-    enableButton(closeSession)
-    }
+    protected fun apiCategories(): CategoriesDataSource
+    {
+        return ManagerDataSource.getInstance().categories()
     }
 
-
+    protected fun apiDestinations(): DestinationsDataSource
+    {
+        return ManagerDataSource.getInstance().destinations()
     }
 
-     */
+    protected fun apiProducts(): ProductsDataSource
+    {
+        return ManagerDataSource.getInstance().products()
+    }
 
 }

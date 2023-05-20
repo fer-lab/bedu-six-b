@@ -2,8 +2,8 @@ package com.randomx.travel.network.datasource
 
 
 import ApiClient
+import com.randomx.travel.model.DestinationModel
 import com.randomx.travel.model.ProductModel
-import com.randomx.travel.model.destination.DestinationModel
 import com.randomx.travel.network.ApiResponse
 import com.randomx.travel.network.ApiResponseExtractor
 import com.randomx.travel.network.api.DestinationsApi

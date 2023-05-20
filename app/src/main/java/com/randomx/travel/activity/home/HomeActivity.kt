@@ -1,16 +1,16 @@
 package com.randomx.travel.activity.home
 
+import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.randomx.travel.R
 import com.randomx.travel.activity.BaseActivity
 import com.randomx.travel.adapter.HomeCategoriesAdapter
+import com.randomx.travel.adapter.HomeDestinationsAdapter
 import com.randomx.travel.model.CategoryModel
-import com.randomx.travel.model.destination.DestinationModel
+import com.randomx.travel.model.DestinationModel
 import com.randomx.travel.network.ApiResponse
-import com.randomx.travel.network.datasource.ManagerDataSource
 import kotlinx.coroutines.runBlocking
 
 
@@ -18,16 +18,23 @@ class HomeActivity : BaseActivity() {
 
     private lateinit var homeCategoriesRecyclerView: RecyclerView
     private lateinit var homeCategoriesAdapter: HomeCategoriesAdapter
+
+    private lateinit var homeDestinationsRecyclerView: RecyclerView
+    private lateinit var homeDestinationsAdapter: HomeDestinationsAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        initCategories()
+        initDestinations()
 
-        val destinations = getDestinations()
-        val categories = getCategories()
+    }
 
-        homeCategoriesRecyclerView = findViewById(R.id.homeCategoriesRecyclerView)
-        homeCategoriesAdapter = HomeCategoriesAdapter(categories)
+    private fun initCategories() {
+
+        homeCategoriesRecyclerView = findViewById(R.id.home_categories_recycler_view)
+        homeCategoriesAdapter = HomeCategoriesAdapter(this, getCategories(), R.layout.home_categories_adapter)
 
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = RecyclerView.HORIZONTAL
@@ -37,14 +44,31 @@ class HomeActivity : BaseActivity() {
 
     }
 
+    private fun initDestinations() {
+
+        homeDestinationsRecyclerView = findViewById(R.id.home_destinations_recycler_view)
+        homeDestinationsAdapter = HomeDestinationsAdapter(this, getDestinations(), R.layout.home_destinations_adapter)
+
+        val layoutManager = LinearLayoutManager(this)
+        val orientation = resources.configuration.orientation
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            layoutManager.orientation = RecyclerView.HORIZONTAL
+        } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            layoutManager.orientation = RecyclerView.VERTICAL
+        }
+
+        homeDestinationsRecyclerView.layoutManager = layoutManager
+        homeDestinationsRecyclerView.adapter = homeDestinationsAdapter
+    }
+
     private fun getCategories(): List<CategoryModel> = runBlocking {
-        val response: ApiResponse<List<CategoryModel>> = ManagerDataSource.getInstance().categories().getRandom(4)
+        val response: ApiResponse<List<CategoryModel>> = apiCategories().getRandom(4)
         return@runBlocking response.data?:emptyList<CategoryModel>()
     }
     private fun getDestinations(): List<DestinationModel> = runBlocking {
-        val response: ApiResponse<List<DestinationModel>> = ManagerDataSource.getInstance().destinations().getRandom(4)
+        val response: ApiResponse<List<DestinationModel>> = apiDestinations().getRandom(4)
         return@runBlocking response.data?:emptyList<DestinationModel>()
     }
-
 
 }

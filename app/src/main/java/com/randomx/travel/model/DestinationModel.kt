@@ -1,5 +1,6 @@
-package com.randomx.travel.model.destination
+package com.randomx.travel.model
 
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.randomx.travel.model.assets.ImageModel
 
@@ -13,3 +14,14 @@ data class DestinationModel(
     @SerializedName("SPDestinationImages") val destinationImages: Map<String, ImageModel>?,
     @SerializedName("SPDestinationTags") val destinationTags: List<String>?
 )
+{
+    companion object {
+        fun fromJson(json: String?): DestinationModel {
+            return Gson().fromJson(json?:"{}", DestinationModel::class.java)
+        }
+    }
+
+    fun exportToJson(): String {
+        return Gson().toJson(this)
+    }
+}

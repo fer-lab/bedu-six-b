@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,6 +9,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/actionBarSize"
         android:background="@android:color/white"
         android:clipToPadding="false"
         android:scrollbars="none"
@@ -25,11 +26,13 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/home_first_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/spacing_large"
-                    android:layout_marginRight="@dimen/spacing_large"
-                    android:text="Best Offers"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:text="@string/home_categories_title"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                     android:textColor="@color/grey_80"
                     android:textStyle="bold" />
@@ -37,14 +40,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/spacing_large"
-                    android:layout_marginRight="@dimen/spacing_large"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Recommended Destination"
+                        android:text="@string/home_categories_title_sub"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
                         android:textColor="@color/grey_40" />
 
@@ -56,20 +59,81 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="View All"
+                        android:text="@string/home_categories_cta"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
                         android:textColor="@color/grey_40" />
 
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/homeCategoriesRecyclerView"
+                android:id="@+id/home_categories_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:orientation="horizontal">
                 </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:text="@string/home_destinations_title"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/grey_80"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_destinations_title_sub"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                        android:textColor="@color/grey_40" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_destinations_cta"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+                        android:textColor="@color/grey_40" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_destinations_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:orientation="vertical">
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/spacing_medium" />
+
 
         </LinearLayout>
 
