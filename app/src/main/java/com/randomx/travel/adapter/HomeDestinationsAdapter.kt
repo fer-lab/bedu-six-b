@@ -7,13 +7,20 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.LayoutRes
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.randomx.travel.R
 import com.randomx.travel.activity.destination.DestinationActivity
 import com.randomx.travel.model.DestinationModel
+import com.randomx.travel.model.DestinationViewModel
 import com.randomx.travel.utils.ImageUtils
 
 class HomeDestinationsAdapter(private val context: Context, private val data: List<DestinationModel>, @LayoutRes private val layout_id: Int) : BaseAdapter<DestinationModel, HomeDestinationsAdapter.ViewHolder>(context, data, layout_id) {
+
+    override fun entityCode(): String {
+        return "destination"
+    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val destinationNameTextView: TextView = itemView.findViewById(R.id.home_destination_name)

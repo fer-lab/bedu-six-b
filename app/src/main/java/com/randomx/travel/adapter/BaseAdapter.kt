@@ -12,11 +12,12 @@ abstract class BaseAdapter<T, VH : RecyclerView.ViewHolder>(
     @LayoutRes private val layout_id: Int
 ) : RecyclerView.Adapter<VH>() {
 
-    protected fun setItemClickListener(viewHolder: VH, item: T, destinationActivity: Class<*>, activityEntity: T) {
+    protected abstract fun entityCode(): String
+    protected fun setItemClickListener(viewHolder: VH, item: T, activity: Class<*>, activityEntity: T) {
         viewHolder.itemView.setOnClickListener {
-            val intent = Intent(context, destinationActivity)
+            val intent = Intent(context, activity)
             val json = Gson().toJson(activityEntity)
-            intent.putExtra("entity", json)
+            intent.putExtra(entityCode(), json)
             context.startActivity(intent)
         }
 

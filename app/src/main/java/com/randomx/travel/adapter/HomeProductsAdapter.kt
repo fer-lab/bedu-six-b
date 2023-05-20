@@ -14,6 +14,10 @@ import com.randomx.travel.utils.ImageUtils
 
 class HomeProductsAdapter(private val context: Context, private val data: List<ProductModel>, @LayoutRes private val layout_id: Int) : BaseAdapter<ProductModel, HomeProductsAdapter.ViewHolder>(context, data, layout_id) {
 
+    override fun entityCode(): String {
+        return "product"
+    }
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val productNameTextView: TextView = itemView.findViewById(R.id.product_name)
         private val productImageView: ImageView = itemView.findViewById(R.id.product_image)
