@@ -12,6 +12,16 @@ android {
         enabled = true
     }
 
+
+    flavorDimensions += "version"
+    productFlavors {
+        create("default") {}
+        create("xmast") {
+            dimension = "version"
+            applicationIdSuffix = ".xmast"
+            versionNameSuffix = "-xmast"
+        }
+    }
     defaultConfig {
         applicationId "com.randomx.travel"
         minSdk 28
@@ -38,6 +48,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+
 }
 
 
