@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.randomx.travel.R
-import com.randomx.travel.adapter.HomeProductsAdapter
+import com.randomx.travel.adapter.ProductsAdapter
 import com.randomx.travel.model.ProductsViewModel
 
 abstract class ProductsFragment : Fragment() {
@@ -17,6 +17,8 @@ abstract class ProductsFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var productsViewModel: ProductsViewModel
 
+    protected abstract fun getOwner(): String
+    protected abstract fun getOwnerSerialized(): String
     protected abstract fun getFragmentLayout(): Int
     protected abstract fun initView(view: View)
     protected abstract fun initViewModel()
@@ -24,7 +26,6 @@ abstract class ProductsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         initViewModels()
-
         val view = inflater.inflate(getFragmentLayout(), container, false)
         initView(view)
 
@@ -44,7 +45,7 @@ abstract class ProductsFragment : Fragment() {
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = HomeProductsAdapter(requireContext(), productsViewModel.getProducts().value?: emptyList(), R.layout.adapter_products)
+            adapter = ProductsAdapter(requireContext(), productsViewModel.getProducts().value?: emptyList(), R.layout.adapter_products, getOwner(), getOwnerSerialized())
         }
     }
 

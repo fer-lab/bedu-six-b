@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.location.Location
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -20,12 +21,15 @@ import android.view.WindowInsetsController
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import com.randomx.travel.R
 import com.randomx.travel.activity.MainActivity
 import java.text.NumberFormat
 import java.util.Currency
 import java.util.Random
 import java.util.UUID
+import org.jsoup.Jsoup
+
 
 object ToolsUtils {
 
@@ -240,8 +244,18 @@ object ToolsUtils {
         }
     }
 
+    fun nestedScrollTo(nested: NestedScrollView, targetView: View) {
+        nested.post { nested.scrollTo(500, targetView.bottom) }
+    }
 
+    fun removeHtmlTags(input: String): String {
+        return Jsoup.parse(input).text()
+    }
 
-
+    inline fun <reified T> getListFromArray(context: Context, arrayResId: Int): List<T> {
+        val resources: Resources = context.resources
+        val array: Array<T> = resources.getStringArray(arrayResId) as Array<T>
+        return array.toList()
+    }
 
 }

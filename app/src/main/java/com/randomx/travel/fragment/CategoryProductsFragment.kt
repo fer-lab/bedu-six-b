@@ -9,7 +9,16 @@ class CategoryProductsFragment: ProductsFragment() {
 
     private lateinit var categoryViewModel: CategoryViewModel
 
+    override fun getOwner(): String {
+        return "category";
+    }
 
+    override fun getOwnerSerialized(): String {
+        categoryViewModel.getCategory().value?.let {
+            return it.exportToJson()
+        }
+        return "{}"
+    }
     override fun getFragmentLayout(): Int {
         return R.layout.fragment_products
     }

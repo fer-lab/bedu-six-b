@@ -27,7 +27,8 @@ data class ProductModel(
     @SerializedName("ProductPriceE") val productPriceE: Double?,
     @SerializedName("ProductImage") val productImage: String?,
     @SerializedName("ProductImages") val productImages: Map<String, ImageModel>?,
-    @SerializedName("ProductTags") val productTags: List<String>?
+    @SerializedName("ProductTags") val productTags: List<String>?,
+    @SerializedName("productSwiped") var productSwiped: Boolean?
 )
 {
     companion object {

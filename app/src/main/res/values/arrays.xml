@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <array name="persons">
+        <item>Carlos Pérez</item>
+        <item>Marta López</item>
+        <item>Alejandro Ramírez</item>
+        <item>Sofía Rodríguez</item>
+        <item>Juan García</item>
+        <item>Camila Torres</item>
+        <item>Diego Hernández</item>
+        <item>Valentina Gómez</item>
+        <item>Luis Vargas</item>
+        <item>Isabella Fernández</item>
+    </array>
 
 </resources>

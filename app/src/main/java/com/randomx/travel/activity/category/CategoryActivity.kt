@@ -7,15 +7,18 @@ import com.randomx.travel.R
 import com.randomx.travel.activity.BaseActivity
 import com.randomx.travel.fragment.CategoryProductsFragment
 import com.randomx.travel.model.CategoryModel
+import com.randomx.travel.model.CategoryViewModel
 import com.randomx.travel.model.ProductModel
 import com.randomx.travel.model.ProductsViewModel
 import com.randomx.travel.network.ApiResponse
 import kotlinx.coroutines.runBlocking
+import org.w3c.dom.Text
 
 class CategoryActivity : BaseActivity() {
+
     private lateinit var category: CategoryModel
+    private lateinit var categoryViewModel: CategoryViewModel
     private lateinit var productsViewModel: ProductsViewModel
-    private lateinit var category_name: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,13 +31,18 @@ class CategoryActivity : BaseActivity() {
 
     private fun initComponent() {
 
+
         category = CategoryModel.fromJson(intent.getStringExtra("category")?:"{}")
+        categoryViewModel = ViewModelProvider(this)[CategoryViewModel::class.java]
+        categoryViewModel.setCategory(category)
 
         productsViewModel = ViewModelProvider(this)[ProductsViewModel::class.java]
         productsViewModel.setProducts(getProducts())
 
+        findViewById<TextView>(R.id.toolbar_title).text = category.categoryName.toString()
+
         supportFragmentManager.beginTransaction()
-            .replace(R.id.categories_product_recycler_view, CategoryProductsFragment())
+            .replace(R.id.category_fragment_container, CategoryProductsFragment())
             .commit()
     }
 
@@ -42,4 +50,5 @@ class CategoryActivity : BaseActivity() {
         val response: ApiResponse<List<ProductModel>> = apiCategories().getProducts(category.categoryID.toString())
         return@runBlocking response.data?:emptyList<ProductModel>()
     }
+
 }

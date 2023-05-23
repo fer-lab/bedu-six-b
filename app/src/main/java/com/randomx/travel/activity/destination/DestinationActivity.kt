@@ -6,18 +6,19 @@ import androidx.lifecycle.ViewModelProvider
 import com.randomx.travel.R
 import com.randomx.travel.activity.BaseActivity
 import com.randomx.travel.fragment.DestinationProductsFragment
-import com.randomx.travel.fragment.ProductsFragment
 import com.randomx.travel.model.DestinationModel
 import com.randomx.travel.model.DestinationViewModel
 import com.randomx.travel.model.ProductModel
 import com.randomx.travel.model.ProductsViewModel
 import com.randomx.travel.network.ApiResponse
+import com.randomx.travel.utils.ToolsUtils
 import kotlinx.coroutines.runBlocking
 
 class DestinationActivity : BaseActivity() {
 
     private lateinit var destination: DestinationModel
     private lateinit var destination_name: TextView
+    private lateinit var destination_description: TextView
     private lateinit var destinationViewModel: DestinationViewModel
     private lateinit var productsViewModel: ProductsViewModel
 
@@ -31,16 +32,16 @@ class DestinationActivity : BaseActivity() {
 
     private fun initComponent() {
 
+
         destination = DestinationModel.fromJson(intent.getStringExtra("destination")?:"{}")
+        destinationViewModel = ViewModelProvider(this)[DestinationViewModel::class.java]
+        destinationViewModel.setDestination(destination)
 
         productsViewModel = ViewModelProvider(this)[ProductsViewModel::class.java]
         productsViewModel.setProducts(getProducts())
 
-        destinationViewModel = ViewModelProvider(this)[DestinationViewModel::class.java]
-        destinationViewModel.setDestination(destination)
 
-        destination_name = findViewById(R.id.destination_name)
-        destination_name.text = destination.destinationName
+        findViewById<TextView>(R.id.toolbar_title).text = destination.destinationName.toString()
 
 
         supportFragmentManager.beginTransaction()

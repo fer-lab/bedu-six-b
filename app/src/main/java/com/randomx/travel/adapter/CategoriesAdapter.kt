@@ -9,29 +9,31 @@ import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.randomx.travel.R
-import com.randomx.travel.model.ProductModel
+import com.randomx.travel.activity.category.CategoryActivity
+import com.randomx.travel.model.CategoryModel
 import com.randomx.travel.utils.ImageUtils
 
-class HomeProductsAdapter(private val context: Context, private val data: List<ProductModel>, @LayoutRes private val layout_id: Int) : BaseAdapter<ProductModel, HomeProductsAdapter.ViewHolder>(context, data, layout_id) {
+class CategoriesAdapter(private val context: Context, private val data: List<CategoryModel>, @LayoutRes private val layout_id: Int) : BaseAdapter<CategoryModel, CategoriesAdapter.ViewHolder>(context, data, layout_id) {
+
 
     override fun entityCode(): String {
-        return "product"
+        return "category"
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val productNameTextView: TextView = itemView.findViewById(R.id.product_name)
-        private val productImageView: ImageView = itemView.findViewById(R.id.product_image)
+        private val categoryNameTextView: TextView = itemView.findViewById(R.id.home_category_name)
+        private val categoryImageView: ImageView = itemView.findViewById(R.id.home_category_image)
 
-        fun bind(product: ProductModel) {
+        fun bind(category: CategoryModel) {
+            categoryNameTextView.text = category.categoryName?:""
 
-            productNameTextView.text = product.productName?:"Hola"
-
-            if (!product.productImage.isNullOrEmpty())
+            if (!category.categoryImage.isNullOrEmpty())
             {
-                ImageUtils.loadImageFromUrl(itemView.context, product.productImage, productImageView)
+                ImageUtils.loadImageFromUrl(itemView.context, category.categoryImage, categoryImageView)
             }
 
-            //setItemClickListener(this, product, DestinationActivity::class.java, product)
+            setItemClickListener(this, category, CategoryActivity::class.java, category, "", "")
+
         }
     }
 

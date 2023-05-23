@@ -5,9 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".activity.destination.DestinationHomeActivity">
 
+    <include layout="@layout/shared_toolbar" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/actionBarSizeX1"
         android:layout_marginBottom="@dimen/actionBarSize"
         android:orientation="vertical">
 

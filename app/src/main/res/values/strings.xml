@@ -197,6 +197,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login_logo_description">Logo</string>
+    <string name="product_label_package">Package Information</string>
+    <string name="product_label_itinerary">Itinerary</string>
+    <string name="back">Back</string>
+    <string name="wishlist_confirm_message">Added to favorites</string>
+    <string name="wishlist_title">Wishlist</string>
 
 
 </resources>

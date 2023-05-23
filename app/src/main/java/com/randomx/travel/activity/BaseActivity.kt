@@ -245,10 +245,12 @@ abstract class BaseActivity : AppCompatActivity() {
 
                     when (menuItem.itemId) {
                         R.id.profile_menu_my_account -> {
-                            ToolsUtils.goToActivity(this, ProfileActivity::class.java)
+                            DialogUtils.toast(this, "Not implemented")
+                            //ToolsUtils.goToActivity(this, ProfileActivity::class.java)
                         }
                         R.id.profile_menu_orders -> {
-                            ToolsUtils.goToActivity(this, OrderActivity::class.java)
+                            DialogUtils.toast(this, "Not implemented")
+                            //ToolsUtils.goToActivity(this, OrderActivity::class.java)
                         }
                         R.id.profile_menu_sign_out -> {
 
@@ -383,5 +385,10 @@ abstract class BaseActivity : AppCompatActivity() {
     {
         return ManagerDataSource.getInstance().products()
     }
+    open fun onBackPressed(view: View?) {
+        // Handle the back button click here
+        onBackPressed() // or any custom logic you want
+    }
+
 
 }

@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.randomx.travel.R
 import com.randomx.travel.activity.BaseActivity
-import com.randomx.travel.adapter.HomeCategoriesAdapter
-import com.randomx.travel.adapter.HomeDestinationsAdapter
+import com.randomx.travel.adapter.CategoriesAdapter
+import com.randomx.travel.adapter.DestinationsAdapter
 import com.randomx.travel.model.CategoryModel
 import com.randomx.travel.model.DestinationModel
 import com.randomx.travel.network.ApiResponse
@@ -17,10 +17,10 @@ import kotlinx.coroutines.runBlocking
 class HomeActivity : BaseActivity() {
 
     private lateinit var homeCategoriesRecyclerView: RecyclerView
-    private lateinit var homeCategoriesAdapter: HomeCategoriesAdapter
+    private lateinit var homeCategoriesAdapter: CategoriesAdapter
 
     private lateinit var homeDestinationsRecyclerView: RecyclerView
-    private lateinit var homeDestinationsAdapter: HomeDestinationsAdapter
+    private lateinit var homeDestinationsAdapter: DestinationsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ class HomeActivity : BaseActivity() {
     private fun initCategories() {
 
         homeCategoriesRecyclerView = findViewById(R.id.home_categories_recycler_view)
-        homeCategoriesAdapter = HomeCategoriesAdapter(this, getCategories(), R.layout.home_categories_adapter)
+        homeCategoriesAdapter = CategoriesAdapter(this, getCategories(), R.layout.home_categories_adapter)
 
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = RecyclerView.HORIZONTAL
@@ -47,7 +47,7 @@ class HomeActivity : BaseActivity() {
     private fun initDestinations() {
 
         homeDestinationsRecyclerView = findViewById(R.id.home_destinations_recycler_view)
-        homeDestinationsAdapter = HomeDestinationsAdapter(this, getDestinations(), R.layout.home_destinations_adapter)
+        homeDestinationsAdapter = DestinationsAdapter(this, getDestinations(), R.layout.home_destinations_adapter)
 
         val layoutManager = LinearLayoutManager(this)
         val orientation = resources.configuration.orientation

@@ -1,10 +1,10 @@
 package com.randomx.travel.activity.destination
 
-import android.util.Log
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.randomx.travel.R
 import com.randomx.travel.activity.BaseRecyclerViewActivity
-import com.randomx.travel.adapter.HomeDestinationsAdapter
+import com.randomx.travel.adapter.DestinationsAdapter
 import com.randomx.travel.model.DestinationModel
 import com.randomx.travel.network.ApiResponse
 import kotlinx.coroutines.runBlocking
@@ -12,6 +12,7 @@ import kotlinx.coroutines.runBlocking
 class DestinationHomeActivity : BaseRecyclerViewActivity() {
 
     override fun initComponent() {
+        findViewById<TextView>(R.id.toolbar_title).text = getString(R.string.destination_title)
     }
 
     override fun getLayoutResourceId(): Int {
@@ -23,12 +24,11 @@ class DestinationHomeActivity : BaseRecyclerViewActivity() {
     }
 
     override fun getAdapterInstance(): RecyclerView.Adapter<*> {
-        return HomeDestinationsAdapter(this, getData(), R.layout.home_destinations_adapter)
+        return DestinationsAdapter(this, getData(), R.layout.home_destinations_adapter)
     }
 
     override fun getData(): List<DestinationModel> = runBlocking {
         val response: ApiResponse<List<DestinationModel>> = apiDestinations().getAll()
-        Log.d("DestinationHomeActivity", "getData: " + response.data.toString())
         return@runBlocking response.data?:emptyList<DestinationModel>()
     }
 

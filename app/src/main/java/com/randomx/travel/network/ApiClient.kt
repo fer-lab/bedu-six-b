@@ -12,7 +12,7 @@ import java.io.File
 object ApiClient {
     private const val BASE_URL = "https://api.travel.udg.pruebas.dev/"
 
-    private const val isInterceptorEnabled = true
+    private const val isInterceptorEnabled = false
 
     private val context = RandomApp.getInstance()
     private val cacheSize = 10 * 1024 * 1024
