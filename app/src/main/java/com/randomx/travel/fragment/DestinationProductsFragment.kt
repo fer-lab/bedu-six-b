@@ -1,7 +1,6 @@
 package com.randomx.travel.fragment
 
 import android.view.View
-import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.randomx.travel.R
 import com.randomx.travel.model.DestinationViewModel

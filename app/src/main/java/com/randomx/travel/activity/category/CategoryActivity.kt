@@ -12,7 +12,6 @@ import com.randomx.travel.model.ProductModel
 import com.randomx.travel.model.ProductsViewModel
 import com.randomx.travel.network.ApiResponse
 import kotlinx.coroutines.runBlocking
-import org.w3c.dom.Text
 
 class CategoryActivity : BaseActivity() {
 

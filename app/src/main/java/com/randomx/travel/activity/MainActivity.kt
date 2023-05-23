@@ -1,6 +1,7 @@
 package com.randomx.travel.activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.randomx.travel.R
 import com.randomx.travel.activity.auth.LoginScreen
@@ -15,6 +16,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         ToolsUtils.init(applicationContext)
 
+        // getapplication id
+
+        Log.d("FLAVOR", applicationContext.packageName)
         checkUserSession()
     }
 

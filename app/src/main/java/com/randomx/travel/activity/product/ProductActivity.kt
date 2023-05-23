@@ -2,7 +2,6 @@ package com.randomx.travel.activity.product
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageButton
@@ -21,8 +20,6 @@ import com.randomx.travel.utils.ImageUtils
 import com.randomx.travel.utils.RandomUtils
 import com.randomx.travel.utils.ToolsUtils
 import com.randomx.travel.utils.ViewAnimation
-import kotlin.math.log
-import kotlin.random.Random
 
 abstract class ProductActivity : BaseActivity() {
 

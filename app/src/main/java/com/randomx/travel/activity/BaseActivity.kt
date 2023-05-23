@@ -23,8 +23,6 @@ import com.randomx.travel.activity.category.CategoryHomeActivity
 import com.randomx.travel.activity.destination.DestinationHomeActivity
 import com.randomx.travel.activity.error.InternetErrorActivity
 import com.randomx.travel.activity.home.HomeActivity
-import com.randomx.travel.activity.profile.OrderActivity
-import com.randomx.travel.activity.profile.ProfileActivity
 import com.randomx.travel.activity.wishlist.WishlistHomeActivity
 import com.randomx.travel.model.UserModel
 import com.randomx.travel.network.datasource.CategoriesDataSource

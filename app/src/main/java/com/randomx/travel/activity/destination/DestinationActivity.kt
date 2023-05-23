@@ -11,7 +11,6 @@ import com.randomx.travel.model.DestinationViewModel
 import com.randomx.travel.model.ProductModel
 import com.randomx.travel.model.ProductsViewModel
 import com.randomx.travel.network.ApiResponse
-import com.randomx.travel.utils.ToolsUtils
 import kotlinx.coroutines.runBlocking
 
 class DestinationActivity : BaseActivity() {

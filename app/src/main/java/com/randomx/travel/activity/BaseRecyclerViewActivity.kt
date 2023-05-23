@@ -1,8 +1,6 @@
 package com.randomx.travel.activity
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 

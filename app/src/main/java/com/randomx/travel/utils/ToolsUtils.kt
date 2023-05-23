@@ -24,11 +24,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import com.randomx.travel.R
 import com.randomx.travel.activity.MainActivity
+import org.jsoup.Jsoup
 import java.text.NumberFormat
 import java.util.Currency
 import java.util.Random
 import java.util.UUID
-import org.jsoup.Jsoup
 
 
 object ToolsUtils {
