@@ -81,7 +81,12 @@ object ToolsUtils {
 
     }
 
-    fun goToHome(context: Context, clearStack: Boolean) {
+    fun goToHome(context: Context, clearStack: Boolean, toastMessage: String? = null) {
+
+        if (toastMessage != null) {
+            toast(context, toastMessage)
+        }
+
         goToActivity(context, MainActivity::class.java, clearStack)
     }
 

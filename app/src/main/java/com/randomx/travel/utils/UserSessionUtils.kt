@@ -4,49 +4,54 @@ package com.randomx.travel.utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.google.gson.Gson
 import com.randomx.travel.model.UserModel
+import kotlinx.coroutines.runBlocking
+import java.util.concurrent.Flow
 
 object UserSessionUtils {
 
-    private const val PREF_NAME = ""
-    private const val KEY_NAME = ""
-    private const val KEY_LAST_NAME = ""
-    private const val KEY_EMAIL = ""
 
-    private lateinit var sharedPreferences: SharedPreferences
+    private const val KEY_USER = "user"
+    private lateinit var dataStoreManager: DataStoreManagerUtils
+    private val gson = Gson()
+    private var user: UserModel? = null
 
     fun init(context: Context) {
-        sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        dataStoreManager = DataStoreManagerUtils.getInstance(context)
     }
-
     fun setUser(user: UserModel) {
-        Log.d("UserSessionUtils", "setUser: $user")
-        val editor = sharedPreferences.edit()
-        editor.putString(KEY_NAME, user.name)
-        editor.putString(KEY_LAST_NAME, user.lastName)
-        editor.putString(KEY_EMAIL, user.email)
-        // Guarda otros datos del usuario si es necesario
-        editor.apply()
+        this.user = user
+        runBlocking { dataStoreManager.setString(KEY_USER, gson.toJson(user)) }
     }
 
     fun getUser(): UserModel {
-        val name = sharedPreferences.getString(KEY_NAME, null)
-        val lastName = sharedPreferences.getString(KEY_LAST_NAME, null)
-        val email = sharedPreferences.getString(KEY_EMAIL, null)
 
-        Log.d("UserSessionUtils", "getUser: $name $lastName $email")
-        return UserModel(name, lastName, email, null, null)
+        return if (user !== null && !user!!.email.isNullOrEmpty()) {
+            user as UserModel
+        } else {
+            val userJson = runBlocking { dataStoreManager.getString(KEY_USER, "") }
+            user = try {
+                gson.fromJson(userJson, UserModel::class.java)
+            } catch (e: Exception) {
+                UserModel("", "", "", "", "")
+            }
+
+            if (user == null) {
+                user = UserModel("", "", "", "", "")
+            }
+            user as UserModel
+        }
+
     }
 
     fun clearUser() {
-        val editor = sharedPreferences.edit()
-        editor.clear()
-        editor.apply()
-
+        runBlocking { dataStoreManager.removeString(KEY_USER) }
+        user = UserModel("", "", "", "", "")
     }
 
     fun isUserLogged(): Boolean {
-        return sharedPreferences.contains(KEY_EMAIL) && !sharedPreferences.getString(KEY_EMAIL, "").isNullOrEmpty()
+        return !getUser().email.isNullOrEmpty()
     }
 
     fun isUserNotLogged(): Boolean {

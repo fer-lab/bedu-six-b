@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.randomx.travel.R
 import com.randomx.travel.activity.auth.LoginScreen
 import com.randomx.travel.activity.home.HomeActivity
+import com.randomx.travel.utils.DataStoreManagerUtils
 import com.randomx.travel.utils.ToolsUtils
 import com.randomx.travel.utils.UserSessionUtils
 
@@ -15,10 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ToolsUtils.init(applicationContext)
-
-        // getapplication id
-
-        Log.d("FLAVOR", applicationContext.packageName)
+        DataStoreManagerUtils.init(this)
         checkUserSession()
     }
 

@@ -111,4 +111,9 @@
         <item name="mrl_rippleColor">#80000000</item>
     </style>
 
+    <style name="Widget.Material3.Button.Muted" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/grey_400</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

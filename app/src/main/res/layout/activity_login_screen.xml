@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -22,51 +23,45 @@
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/spacing_large">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/email"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_layout_email"
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_field_email"
+            style="@style/CustomTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-4dp"
-            android:layout_marginEnd="-4dp"
-            android:inputType="textEmailAddress"
-            android:maxLength="50"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@color/blue_grey_300"
-            android:theme="@style/EditText.Grey" />
+            android:hint="@string/email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_field_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <View
             android:layout_width="0dp"
             android:layout_height="@dimen/spacing_medium" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/password"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_layout_password"
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_field_password"
+            style="@style/CustomTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-4dp"
-            android:layout_marginEnd="-4dp"
-            android:inputType="textPassword"
-            android:maxLength="50"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@color/blue_grey_300"
-            android:theme="@style/EditText.Grey" />
+            android:hint="@string/password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_field_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:maxLines="1"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
         <TextView
@@ -85,15 +80,30 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/spacing_large" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/login_submit"
             style="@style/Widget.Material3.Button"
+            android:layout_gravity="center"
+            app:icon="@drawable/ic_email"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginStart="-4dp"
             android:layout_marginEnd="-4dp"
             android:text="@string/login_btn"
             android:textAllCaps="false" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_medium" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/login_submit_google"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="-4dp"
+            android:text="@string/login_google_btn"
+            android:layout_marginEnd="-4dp"/>
+
 
         <View
             android:layout_width="0dp"
@@ -110,7 +120,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/login_new_user"
-                android:textColor="@color/blue_grey_300" />
+                android:textColor="@color/blue_grey_300"
+                android:layout_marginEnd="@dimen/spacing_large"/>
 
             <TextView
                 android:id="@+id/login_sign_up_btn"
