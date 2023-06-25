@@ -168,6 +168,34 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/nav_menu_tours"
+                android:layout_width="0dp"
+                android:layout_height="?android:attr/actionBarSize"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    app:srcCompat="@drawable/ic_tour"
+                    app:tint="@color/blue_900" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="@string/tours_navbar_button"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="8sp"
+                    app:fontFamily="sans-serif-medium" />
+
+            </LinearLayout>
+
             <!-- profile -->
             <LinearLayout
                 android:id="@+id/nav_menu_profile"

@@ -23,6 +23,7 @@ import com.randomx.travel.activity.category.CategoryHomeActivity
 import com.randomx.travel.activity.destination.DestinationHomeActivity
 import com.randomx.travel.activity.error.InternetErrorActivity
 import com.randomx.travel.activity.home.HomeActivity
+import com.randomx.travel.activity.tours.ToursHomeActivity
 import com.randomx.travel.activity.wishlist.WishlistHomeActivity
 import com.randomx.travel.model.UserModel
 import com.randomx.travel.network.datasource.CategoriesDataSource
@@ -48,6 +49,7 @@ abstract class BaseActivity : AppCompatActivity() {
     private lateinit var _navbarHome: LinearLayout
     private lateinit var _navbarDestinations: LinearLayout
     private lateinit var _navbarCategories: LinearLayout
+    private lateinit var _navbarTours: LinearLayout
     private lateinit var _navbarWishlist: LinearLayout
     private lateinit var _navbarProfile: LinearLayout
     private var _navbarLoaded: Boolean = false
@@ -148,6 +150,7 @@ abstract class BaseActivity : AppCompatActivity() {
         _navbarHome = findViewById(R.id.nav_menu_home)
         _navbarDestinations = findViewById(R.id.nav_menu_destinations)
         _navbarCategories = findViewById(R.id.nav_menu_categories)
+        _navbarTours = findViewById(R.id.nav_menu_tours)
         _navbarWishlist = findViewById(R.id.nav_menu_wishlist)
         _navbarProfile = findViewById(R.id.nav_menu_profile)
 
@@ -167,14 +170,18 @@ abstract class BaseActivity : AppCompatActivity() {
         }
         _navbarCategories.setOnClickListener {
             if (this is CategoryHomeActivity) {
-                // Ya estás en la CategoryHomeActivity, no es necesario iniciarla nuevamente
                 return@setOnClickListener
             }
             ToolsUtils.goToActivity(this, CategoryHomeActivity::class.java, clearStack)
         }
+        _navbarTours.setOnClickListener {
+            if (this is ToursHomeActivity) {
+                return@setOnClickListener
+            }
+            ToolsUtils.goToActivity(this, ToursHomeActivity::class.java, clearStack)
+        }
         _navbarWishlist.setOnClickListener {
             if (this is WishlistHomeActivity) {
-                // Ya estás en la WishlistHomeActivity, no es necesario iniciarla nuevamente
                 return@setOnClickListener
             }
             ToolsUtils.goToActivity(this, WishlistHomeActivity::class.java, clearStack)
@@ -247,6 +254,10 @@ abstract class BaseActivity : AppCompatActivity() {
                             //ToolsUtils.goToActivity(this, ProfileActivity::class.java)
                         }
                         R.id.profile_menu_orders -> {
+                            DialogUtils.toast(this, "Not implemented")
+                            //ToolsUtils.goToActivity(this, OrderActivity::class.java)
+                        }
+                        R.id.profile_menu_lab -> {
                             DialogUtils.toast(this, "Not implemented")
                             //ToolsUtils.goToActivity(this, OrderActivity::class.java)
                         }

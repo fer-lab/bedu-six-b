@@ -53,8 +53,10 @@
     <string name="logout_success">Logout successful.</string>
 
     <!-- Profile -->
+    <string name="profile_navbar_button">Profile</string>
     <string name="profile_menu_my_account">My Account</string>
     <string name="profile_menu_orders">My Trips</string>
+    <string name="profile_menu_lab">Lab</string>
     <string name="profile_menu_sign_out">Sign Out</string>
     <string name="profile_menu_exit">Exit</string>
 
@@ -147,11 +149,12 @@
 
     <!-- Wishlist -->
     <string name="wishlist_navbar_button">Wishlist</string>
+    <string name="wishlist_confirm_message">Added to favorites</string>
+    <string name="wishlist_title">Wishlist</string>
 
-
-    <!-- Profile -->
-    <string name="profile_navbar_button">Profile</string>
-
+    <!-- Tours -->
+    <string name="tours_navbar_button">Tours</string>
+    <string name="tours_title">Tours</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
@@ -201,8 +204,6 @@
     <string name="product_label_package">Package Information</string>
     <string name="product_label_itinerary">Itinerary</string>
     <string name="back">Back</string>
-    <string name="wishlist_confirm_message">Added to favorites</string>
-    <string name="wishlist_title">Wishlist</string>
     <string name="login_success">Logged in successfully!</string>
 
 

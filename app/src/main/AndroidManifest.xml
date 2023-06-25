@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".RandomApp"
@@ -15,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.tours.ToursHomeActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.product.ProductActivity"
             android:exported="false" />
@@ -47,6 +52,9 @@
             android:exported="false" />
         <activity
             android:name=".activity.error.InternetErrorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.error.LocationErrorActivity"
             android:exported="false" />
         <activity
             android:name=".activity.home.HomeActivity"
