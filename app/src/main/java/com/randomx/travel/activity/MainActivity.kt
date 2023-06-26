@@ -1,7 +1,6 @@
 package com.randomx.travel.activity
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.randomx.travel.R
 import com.randomx.travel.activity.auth.LoginScreen

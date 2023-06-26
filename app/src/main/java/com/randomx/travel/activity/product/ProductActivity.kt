@@ -2,6 +2,7 @@ package com.randomx.travel.activity.product
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageButton
@@ -12,24 +13,37 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.NestedScrollView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.randomx.travel.R
+import com.randomx.travel.RandomApp
 import com.randomx.travel.activity.BaseActivity
+import com.randomx.travel.data.local.Wishlist
+import com.randomx.travel.data.local.WishlistRepository
+import com.randomx.travel.model.ProductCaller
 import com.randomx.travel.model.ProductModel
+import com.randomx.travel.utils.DialogUtils
 import com.randomx.travel.utils.ImageUtils
 import com.randomx.travel.utils.RandomUtils
 import com.randomx.travel.utils.ToolsUtils
 import com.randomx.travel.utils.ViewAnimation
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 abstract class ProductActivity : BaseActivity() {
 
 
     protected lateinit var product: ProductModel
+    protected lateinit var productCaller: ProductCaller
     private lateinit var parentView: View
+    private lateinit var wishlistRepo: WishlistRepository
 
     private lateinit var nestedScrollView: NestedScrollView
 
     protected abstract fun initCaller()
+    protected abstract fun initProduct()
+
     protected abstract fun initComponent()
 
     protected abstract fun getLayout(): Int
@@ -42,14 +56,42 @@ abstract class ProductActivity : BaseActivity() {
 
     }
 
+    protected fun product404(routeClass: Class<*>, message: String? = null)
+    {
+        DialogUtils.toastThenActivity(this, message ?: "Product not found", routeClass)
+    }
+
+
+    protected fun currentProduct(): ProductModel?
+    {
+        var currentProduct: ProductModel? = null
+        val productJson = intent.getStringExtra("product")
+        val productId = intent.getStringExtra("product_id")
+
+        when{
+            productJson != null -> {
+                currentProduct = ProductModel.fromJson(productJson)
+            }
+            productId != null ->
+            {
+                runBlocking {
+                    val apiProduct = withContext(Dispatchers.IO) { apiProducts().get(productId).data }
+                    if (apiProduct != null) {
+                        currentProduct = apiProduct
+                    }
+                }
+            }
+        }
+
+        return currentProduct
+    }
 
     private fun initComponentRoot() {
 
+        wishlistRepo = (this.applicationContext as RandomApp).wishlistRepository
 
-        product = ProductModel.fromJson(intent.getStringExtra("product")?:"{}")
+        initProduct()
         initCaller()
-
-
         initToolbar()
 
         parentView = findViewById(R.id.parent_view)
@@ -77,7 +119,35 @@ abstract class ProductActivity : BaseActivity() {
         }
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
-            Snackbar.make(parentView, getString(R.string.wishlist_confirm_message), Snackbar.LENGTH_SHORT).show()
+
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val productWishlist = wishlistRepo.getByProductId(product.productID.toString())
+
+
+                Log.d("ProductActivity", "productWishlist: $productWishlist")
+                if (productWishlist !== null) {
+                    wishlistRepo.remove(productWishlist)
+                    ToolsUtils.snack(parentView ,getString(R.string.wishlist_confirm_message_remove))
+                }
+                else
+                {
+                    wishlistRepo.insert(Wishlist(
+                        id = 0,
+                        product_id = product.productID,
+                        product_name = product.productName,
+                        caller_id = productCaller.callerId,
+                        caller_type = productCaller.callerType,
+                        image = product.productImage)
+                    )
+
+                    ToolsUtils.snack(parentView ,getString(R.string.wishlist_confirm_message))
+                }
+
+
+
+            }
+
         }
 
         findViewById<FloatingActionButton>(R.id.fab2).setOnClickListener {
@@ -89,7 +159,7 @@ abstract class ProductActivity : BaseActivity() {
 
     }
 
-    fun productPopulate()
+    protected fun productPopulate()
     {
         ImageUtils.loadImageFromUrl(this, product.productImage as String, findViewById<ImageView>(R.id.product_image))
         findViewById<TextView>(R.id.product_name).text = product.productName

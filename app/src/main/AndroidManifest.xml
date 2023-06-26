@@ -66,6 +66,9 @@
             android:name=".activity.auth.LoginScreen"
             android:exported="false" />
         <activity
+            android:name=".activity.wishlist.WishlistListViewModel"
+            android:exported="false" />
+        <activity
             android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>

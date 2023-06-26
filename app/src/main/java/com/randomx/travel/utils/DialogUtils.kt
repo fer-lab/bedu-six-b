@@ -75,7 +75,7 @@ object DialogUtils {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    fun toastThenActivity(context: Context, destinationClass: Class<*>, message: String)
+    fun toastThenActivity(context: Context, message: String, destinationClass: Class<*>)
     {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 

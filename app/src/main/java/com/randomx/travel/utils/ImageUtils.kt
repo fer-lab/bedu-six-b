@@ -3,6 +3,8 @@ package com.randomx.travel.utils
 import android.content.Context
 import android.graphics.Bitmap
 import android.widget.ImageView
+import androidx.core.net.toUri
+import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.zxing.BarcodeFormat
@@ -46,6 +48,17 @@ object ImageUtils {
             e.printStackTrace()
         }
         return Bitmap.createBitmap(0, 0, Bitmap.Config.ARGB_8888)
+    }
+
+    @JvmStatic
+    @BindingAdapter("imageUrl")
+    fun bindImage(imgView: ImageView, imgUrl: String?) {
+        imgUrl?.let {
+            val imgUri = it.toUri().buildUpon().scheme("https").build()
+            Glide.with(imgView.context)
+                .load(imgUri)
+                .into(imgView)
+        }
     }
 
 }

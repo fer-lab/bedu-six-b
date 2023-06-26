@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.category.CategoryActivity">
 
     <include layout="@layout/shared_toolbar" />
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
@@ -21,14 +22,17 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:scrollingCache="true" />
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph" />
 
-    </LinearLayout>
+
+    </FrameLayout>
     <include layout="@layout/shared_content" />
     <include layout="@layout/profile_dialog_bottom_sheet" />
 

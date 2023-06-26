@@ -116,4 +116,15 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="TextAlertInfo">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/spacing_large</item>
+        <item name="android:layout_marginEnd">@dimen/spacing_large</item>
+        <item name="android:padding">@dimen/spacing_large</item>
+        <item name="android:textColor">#102F49</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:background">@drawable/alert_background</item>
+    </style>
+
 </resources>

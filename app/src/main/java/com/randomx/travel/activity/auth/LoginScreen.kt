@@ -7,7 +7,6 @@ import android.util.Patterns
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView

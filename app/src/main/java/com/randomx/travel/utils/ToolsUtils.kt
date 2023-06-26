@@ -22,6 +22,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
+import com.google.android.material.snackbar.Snackbar
 import com.randomx.travel.R
 import com.randomx.travel.activity.MainActivity
 import org.jsoup.Jsoup
@@ -92,6 +93,11 @@ object ToolsUtils {
 
     fun toast(context: Context, message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+
+    fun snack(view: View, message: String) {
+        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
     }
 
 

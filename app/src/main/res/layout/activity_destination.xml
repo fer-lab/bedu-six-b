@@ -11,7 +11,7 @@
         android:id="@+id/destination_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/actionBarSizeX1"
+        android:layout_marginTop="@dimen/actionBarSizeP1"
         />
 
     <include layout="@layout/shared_content" />

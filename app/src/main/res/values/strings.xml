@@ -149,7 +149,9 @@
 
     <!-- Wishlist -->
     <string name="wishlist_navbar_button">Wishlist</string>
-    <string name="wishlist_confirm_message">Added to favorites</string>
+    <string name="wishlist_confirm_message">Added to wishlist</string>
+    <string name="wishlist_confirm_message_remove">Removed from wishlist</string>
+    <string name="wishlist_empty">You don\'t have any products in your wishlist </string>
     <string name="wishlist_title">Wishlist</string>
 
     <!-- Tours -->
@@ -205,6 +207,7 @@
     <string name="product_label_itinerary">Itinerary</string>
     <string name="back">Back</string>
     <string name="login_success">Logged in successfully!</string>
+    <string name="wishlist_button_remove">Remove</string>
 
 
 </resources>

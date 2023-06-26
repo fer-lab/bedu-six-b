@@ -2,18 +2,15 @@ package com.randomx.travel.activity.tours
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.randomx.travel.R
 import com.randomx.travel.activity.BaseActivity
-import com.randomx.travel.activity.error.InternetErrorActivity
 import com.randomx.travel.activity.error.LocationErrorActivity
 import com.randomx.travel.databinding.ActivityToursHomeBinding
 import com.randomx.travel.utils.ToolsUtils
