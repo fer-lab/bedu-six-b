@@ -15,7 +15,7 @@ import com.randomx.travel.activity.category.CategoryProductActivity
 import com.randomx.travel.activity.destination.DestinationProductActivity
 import com.randomx.travel.data.local.Wishlist
 import com.randomx.travel.databinding.FragmentWishlistListBinding
-import com.randomx.travel.model.ProductCaller
+import com.randomx.travel.model.ProductCallerModel
 
 class WishlistListFragment : Fragment(), WishlistItemListener {
 
@@ -37,11 +37,10 @@ class WishlistListFragment : Fragment(), WishlistItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("WishlistListFragment", "onViewCreated")
         viewModel.navigateToDetails.observe(viewLifecycleOwner) { wish ->
             wish?.let {
 
-                val productCaller = ProductCaller(
+                val productCaller = ProductCallerModel(
                     callerId = wish.caller_id.toString(),
                     callerType = wish.caller_type.toString()
                 )
@@ -55,7 +54,7 @@ class WishlistListFragment : Fragment(), WishlistItemListener {
 
                 activityDestination.let {
                     val intent = Intent(requireContext(), it).apply {
-                        putExtra("category_id", wish.caller_id)
+                        putExtra("${productCaller.callerType}_id", productCaller.callerId)
                         putExtra("product_id", wish.product_id)
                     }
                     startActivity(intent)

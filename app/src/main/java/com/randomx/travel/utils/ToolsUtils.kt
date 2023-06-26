@@ -70,12 +70,7 @@ object ToolsUtils {
 
         if (context is Activity)
         {
-            Log.d("ToolsUtils", "context is Activity");
             context.overridePendingTransition(0, 0)
-        }
-        else
-        {
-            Log.d("ToolsUtils", "context is Activity");
         }
 
         context.startActivity(intent)

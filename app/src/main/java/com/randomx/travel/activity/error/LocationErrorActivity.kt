@@ -46,10 +46,8 @@ class LocationErrorActivity : AppCompatActivity() {
             Handler(Looper.getMainLooper()).postDelayed({
                 if (ToolsUtils.isNetworkAvailable(this)) {
                     if (isTaskRoot) {
-                        Log.d("LocationErrorActivity", "redirectToLocation")
                         ToolsUtils.goToActivity(this, ToursHomeActivity::class.java)
                     } else {
-                        Log.d("LocationErrorActivity", "finish")
                         finish()
                     }
                 } else {

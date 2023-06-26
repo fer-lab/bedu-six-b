@@ -25,7 +25,6 @@ class WishlistListViewModel(private val wishlistRepository: WishlistRepository):
 
     fun onItemClicked(product: Wishlist) {
         _navigateToDetails.value = product
-        Log.d("WishlistListViewModel", "onItemClicked")
     }
 
     fun onNavigationDone() {

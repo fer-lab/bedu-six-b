@@ -210,4 +210,14 @@
     <string name="wishlist_button_remove">Remove</string>
 
 
+
+    <!-- notifications -->
+    <string name="channel_default_name">General Notifications</string>
+    <string name="channel_default_description">Random Travel Notifications</string>
+
+    <string name="wishlist_notification_title">Travel Package Added</string>
+    <string name="wishlist_notification_body">We have added the tour package to your wishlist</string>
+
+
+
 </resources>

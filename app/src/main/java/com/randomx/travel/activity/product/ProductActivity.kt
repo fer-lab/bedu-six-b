@@ -1,5 +1,6 @@
 package com.randomx.travel.activity.product
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,10 +19,12 @@ import com.randomx.travel.RandomApp
 import com.randomx.travel.activity.BaseActivity
 import com.randomx.travel.data.local.Wishlist
 import com.randomx.travel.data.local.WishlistRepository
-import com.randomx.travel.model.ProductCaller
+import com.randomx.travel.model.ProductCallerModel
 import com.randomx.travel.model.ProductModel
 import com.randomx.travel.utils.DialogUtils
 import com.randomx.travel.utils.ImageUtils
+import com.randomx.travel.utils.NotificationUtils
+import com.randomx.travel.utils.PermissionUtils
 import com.randomx.travel.utils.RandomUtils
 import com.randomx.travel.utils.ToolsUtils
 import com.randomx.travel.utils.ViewAnimation
@@ -35,7 +38,7 @@ abstract class ProductActivity : BaseActivity() {
 
 
     protected lateinit var product: ProductModel
-    protected lateinit var productCaller: ProductCaller
+    protected lateinit var productCaller: ProductCallerModel
     private lateinit var parentView: View
     private lateinit var wishlistRepo: WishlistRepository
 
@@ -118,6 +121,8 @@ abstract class ProductActivity : BaseActivity() {
             }
         }
 
+        val currentActivity = this
+
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
 
 
@@ -125,7 +130,6 @@ abstract class ProductActivity : BaseActivity() {
                 val productWishlist = wishlistRepo.getByProductId(product.productID.toString())
 
 
-                Log.d("ProductActivity", "productWishlist: $productWishlist")
                 if (productWishlist !== null) {
                     wishlistRepo.remove(productWishlist)
                     ToolsUtils.snack(parentView ,getString(R.string.wishlist_confirm_message_remove))
@@ -141,7 +145,10 @@ abstract class ProductActivity : BaseActivity() {
                         image = product.productImage)
                     )
 
-                    ToolsUtils.snack(parentView ,getString(R.string.wishlist_confirm_message))
+                    PermissionUtils.executeOrRequestPermission(currentActivity)
+                    {
+                        NotificationUtils.wishlistAdded(currentActivity, productCaller, product.productID as String)
+                    }
                 }
 
 

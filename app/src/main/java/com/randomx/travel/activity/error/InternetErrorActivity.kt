@@ -44,10 +44,8 @@ class InternetErrorActivity : AppCompatActivity() {
             Handler(Looper.getMainLooper()).postDelayed({
                 if (ToolsUtils.isNetworkAvailable(this)) {
                     if (isTaskRoot) {
-                        Log.d("InternetErrorActivity", "redirectToMainActivity")
                         redirectToMainActivity()
                     } else {
-                        Log.d("InternetErrorActivity", "finish")
                         finish()
                     }
                 } else {

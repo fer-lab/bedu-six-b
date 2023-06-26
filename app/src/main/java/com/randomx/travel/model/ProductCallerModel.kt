@@ -1,6 +1,6 @@
 package com.randomx.travel.model
 
-data class ProductCaller(val callerId: String, val callerType: String)
+data class ProductCallerModel(val callerId: String, val callerType: String)
 {
     fun isCategory(): Boolean
     {

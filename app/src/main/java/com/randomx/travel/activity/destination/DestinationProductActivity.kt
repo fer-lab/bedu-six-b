@@ -5,7 +5,7 @@ import com.randomx.travel.R
 import com.randomx.travel.activity.category.CategoryActivity
 import com.randomx.travel.activity.product.ProductActivity
 import com.randomx.travel.model.DestinationModel
-import com.randomx.travel.model.ProductCaller
+import com.randomx.travel.model.ProductCallerModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -55,7 +55,7 @@ class DestinationProductActivity: ProductActivity() {
                 product404(DestinationActivity::class.java, "Unknown category")
             }
         }
-        productCaller = ProductCaller(destination.destinationID.toString(), "destination")
+        productCaller = ProductCallerModel(destination.destinationID.toString(), "destination")
     }
 
 

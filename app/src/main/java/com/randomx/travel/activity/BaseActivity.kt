@@ -313,7 +313,6 @@ abstract class BaseActivity : AppCompatActivity() {
             return
         }
 
-        Log.d("hideBottomSheet", "hideBottomSheet")
 
         // Ocultar el overlay
         profileOverlay.visibility = View.GONE

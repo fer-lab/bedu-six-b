@@ -4,7 +4,7 @@ import android.widget.TextView
 import com.randomx.travel.R
 import com.randomx.travel.activity.product.ProductActivity
 import com.randomx.travel.model.CategoryModel
-import com.randomx.travel.model.ProductCaller
+import com.randomx.travel.model.ProductCallerModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -55,7 +55,7 @@ class CategoryProductActivity: ProductActivity() {
             }
         }
 
-        productCaller = ProductCaller(category.categoryID.toString(), "category")
+        productCaller = ProductCallerModel(category.categoryID.toString(), "category")
     }
 
     override fun initComponent() {
