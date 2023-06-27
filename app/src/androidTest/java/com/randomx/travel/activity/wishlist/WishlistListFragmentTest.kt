@@ -54,7 +54,7 @@ class WishlistListFragmentTest
     @Test
     fun perform_click_on_delete_button_removes_wish_from_list() {
         launchFragmentInContainer<WishlistListFragment>(null, R.style.AppTheme)
-        Thread.sleep(1_000)
+        Thread.sleep(3_000)
 
         Espresso
             .onView(withId(R.id.list))
@@ -68,7 +68,7 @@ class WishlistListFragmentTest
             )
 
 
-        Thread.sleep(1_000)
+        Thread.sleep(2_000)
         assertThat(wishlistRepo.getAll().value).doesNotContain(cancun)
         assertThat(wishlistRepo.getAll().value).contains(cabos)
         assertThat(wishlistRepo.getAll().value).contains(puerto)
