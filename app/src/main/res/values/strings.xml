@@ -23,6 +23,8 @@
 
 
     <!-- system -->
+    <string name="system_no_gps">No location services found. Enable your location and try again</string>
+    <string name="system_no_gps_whoops">Whoops!</string>
     <string name="system_no_internet">No internet connections found. Check your connection or try again</string>
     <string name="system_no_internet_whoops">Whoops!</string>
     <string name="system_exit_warning">Press again to exit app</string>
