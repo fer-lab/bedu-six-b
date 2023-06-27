@@ -1,9 +1,7 @@
 package com.randomx.travel.activity.product
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageButton
@@ -18,7 +16,7 @@ import com.randomx.travel.R
 import com.randomx.travel.RandomApp
 import com.randomx.travel.activity.BaseActivity
 import com.randomx.travel.data.local.Wishlist
-import com.randomx.travel.data.local.WishlistRepository
+import com.randomx.travel.data.local.WishlistRepositoryInterface
 import com.randomx.travel.model.ProductCallerModel
 import com.randomx.travel.model.ProductModel
 import com.randomx.travel.utils.DialogUtils
@@ -40,7 +38,7 @@ abstract class ProductActivity : BaseActivity() {
     protected lateinit var product: ProductModel
     protected lateinit var productCaller: ProductCallerModel
     private lateinit var parentView: View
-    private lateinit var wishlistRepo: WishlistRepository
+    private lateinit var wishlistRepo: WishlistRepositoryInterface
 
     private lateinit var nestedScrollView: NestedScrollView
 

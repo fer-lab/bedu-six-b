@@ -4,8 +4,8 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import com.randomx.travel.data.local.WishlistDb
-import com.randomx.travel.data.local.WishlistRepository
+import com.randomx.travel.data.local.ServiceLocator
+import com.randomx.travel.data.local.WishlistRepositoryInterface
 
 class RandomApp : Application() {
 
@@ -24,10 +24,8 @@ class RandomApp : Application() {
         setNotificationChannel()
     }
 
-    val wishlistRepository: WishlistRepository
-        get() = WishlistRepository(
-            WishlistDb.getInstance(this)!!.wishlistDao()
-        )
+    val wishlistRepository: WishlistRepositoryInterface
+        get() = ServiceLocator.provideRepository(this)
 
     private fun setNotificationChannel(){
         val name = getString(R.string.channel_default_name)

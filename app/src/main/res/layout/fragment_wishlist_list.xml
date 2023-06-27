@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="vehicleListViewModel"
+            name="wishlistListViewModel"
             type="com.randomx.travel.activity.wishlist.WishlistListViewModel"
             />
     </data>

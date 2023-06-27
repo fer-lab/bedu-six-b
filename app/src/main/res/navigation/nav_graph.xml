@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/vehicleListFragment">
+    app:startDestination="@id/wishlistListFragment">
 
     <fragment
-        android:id="@+id/vehicleListFragment"
+        android:id="@+id/wishlistListFragment"
         android:name="com.randomx.travel.activity.wishlist.WishlistListFragment"
         android:label="fragment_wishlist_list"
         tools:layout="@layout/fragment_wishlist_list" >

@@ -2,12 +2,9 @@ package com.randomx.travel.utils
 
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.util.Log
 import com.google.gson.Gson
 import com.randomx.travel.model.UserModel
 import kotlinx.coroutines.runBlocking
-import java.util.concurrent.Flow
 
 object UserSessionUtils {
 

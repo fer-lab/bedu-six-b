@@ -13,7 +13,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.view.WindowInsets

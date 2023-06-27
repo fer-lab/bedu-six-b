@@ -1,15 +1,14 @@
 package com.randomx.travel.activity.wishlist
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.randomx.travel.data.local.Wishlist
-import com.randomx.travel.data.local.WishlistRepository
+import com.randomx.travel.data.local.WishlistRepositoryInterface
 import kotlinx.coroutines.launch
 
-class WishlistListViewModel(private val wishlistRepository: WishlistRepository): ViewModel(){
+class WishlistListViewModel(private val wishlistRepository: WishlistRepositoryInterface): ViewModel(){
 
     val wishlist: LiveData<List<Wishlist>> = wishlistRepository.getAll()
 
