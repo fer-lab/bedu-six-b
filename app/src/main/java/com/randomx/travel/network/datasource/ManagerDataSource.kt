@@ -4,6 +4,7 @@ class ManagerDataSource {
     private lateinit var _destinations: DestinationsDataSource
     private lateinit var _categories: CategoriesDataSource
     private lateinit var _products: ProductsDataSource
+    private lateinit var _location: LocationDataSource
 
     companion object {
         @Volatile
@@ -33,6 +34,12 @@ class ManagerDataSource {
             _products = ProductsDataSource()
         }
         return _products
+    }
+    fun location(): LocationDataSource {
+        if (!::_location.isInitialized) {
+            _location = LocationDataSource()
+        }
+        return _location
     }
 
 

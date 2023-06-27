@@ -28,6 +28,7 @@ import com.randomx.travel.activity.wishlist.WishlistHomeActivity
 import com.randomx.travel.model.UserModel
 import com.randomx.travel.network.datasource.CategoriesDataSource
 import com.randomx.travel.network.datasource.DestinationsDataSource
+import com.randomx.travel.network.datasource.LocationDataSource
 import com.randomx.travel.network.datasource.ManagerDataSource
 import com.randomx.travel.network.datasource.ProductsDataSource
 import com.randomx.travel.utils.DialogUtils
@@ -392,6 +393,11 @@ abstract class BaseActivity : AppCompatActivity() {
     protected fun apiProducts(): ProductsDataSource
     {
         return ManagerDataSource.getInstance().products()
+    }
+
+    protected fun apiLocation(): LocationDataSource
+    {
+        return ManagerDataSource.getInstance().location()
     }
     open fun onBackPressed(view: View?) {
         // Handle the back button click here

@@ -1,6 +1,7 @@
 import com.randomx.travel.RandomApp
 import com.randomx.travel.network.api.CategoriesApi
 import com.randomx.travel.network.api.DestinationsApi
+import com.randomx.travel.network.api.LocationApi
 import com.randomx.travel.network.api.ProductsApi
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -50,5 +51,9 @@ object ApiClient {
 
     val productsApi: ProductsApi by lazy {
         retrofit.create(ProductsApi::class.java)
+    }
+
+    val locationApi: LocationApi by lazy {
+        retrofit.create(LocationApi::class.java)
     }
 }

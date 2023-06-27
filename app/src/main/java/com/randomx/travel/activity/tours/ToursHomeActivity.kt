@@ -13,12 +13,15 @@ import com.randomx.travel.R
 import com.randomx.travel.activity.BaseActivity
 import com.randomx.travel.activity.error.LocationErrorActivity
 import com.randomx.travel.databinding.ActivityToursHomeBinding
+import com.randomx.travel.model.LocationModel
+import com.randomx.travel.network.ApiResponse
 import com.randomx.travel.utils.ToolsUtils
+import kotlinx.coroutines.runBlocking
 
 class ToursHomeActivity : BaseActivity() {
 
-    lateinit var binding: ActivityToursHomeBinding
-    lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var binding: ActivityToursHomeBinding
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var locationExist: Boolean = false
     private var locationLat: Double = 0.0
     private var locationLon: Double = 0.0
@@ -57,7 +60,8 @@ class ToursHomeActivity : BaseActivity() {
                         locationLat = location.latitude
                         locationLon = location.longitude
                         locationExist = true
-                        ToolsUtils.toast(this, "Location loaded $locationLat $locationLon")
+                        val locationDetails = getLocation()
+                        ToolsUtils.toast(this, "Hello from ${locationDetails.locationCity}, ${locationDetails.locationCountry}!! ($locationLat $locationLon)")
                     }
                     else
                     {
@@ -75,6 +79,11 @@ class ToursHomeActivity : BaseActivity() {
         {
             requestPermissions()
         }
+    }
+
+    private fun getLocation(): LocationModel = runBlocking {
+        val response: ApiResponse<LocationModel> = apiLocation().get(locationLat.toString(), locationLon.toString())
+        return@runBlocking response.data?: LocationModel("", "", "", "", "", "")
     }
 
 }
