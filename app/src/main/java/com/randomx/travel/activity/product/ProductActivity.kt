@@ -2,6 +2,7 @@ package com.randomx.travel.activity.product
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageButton
@@ -12,11 +13,14 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.NestedScrollView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.randomx.travel.R
 import com.randomx.travel.RandomApp
 import com.randomx.travel.activity.BaseActivity
+import com.randomx.travel.activity.category.CategoryActivity
 import com.randomx.travel.data.local.Wishlist
 import com.randomx.travel.data.local.WishlistRepositoryInterface
+import com.randomx.travel.exceptions.ProductNotFoundException
 import com.randomx.travel.model.ProductCallerModel
 import com.randomx.travel.model.ProductModel
 import com.randomx.travel.utils.DialogUtils
@@ -26,6 +30,7 @@ import com.randomx.travel.utils.PermissionUtils
 import com.randomx.travel.utils.RandomUtils
 import com.randomx.travel.utils.ToolsUtils
 import com.randomx.travel.utils.ViewAnimation
+import com.randomx.travel.utils.logUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -57,42 +62,49 @@ abstract class ProductActivity : BaseActivity() {
 
     }
 
-    protected fun product404(routeClass: Class<*>, message: String? = null)
+    protected fun currentProduct(): ProductModel
     {
-        DialogUtils.toastThenActivity(this, message ?: "Product not found", routeClass)
-    }
 
 
-    protected fun currentProduct(): ProductModel?
-    {
         var currentProduct: ProductModel? = null
-        val productJson = intent.getStringExtra("product")
-        val productId = intent.getStringExtra("product_id")
 
-        when{
-            productJson != null -> {
-                currentProduct = ProductModel.fromJson(productJson)
-            }
-            productId != null ->
-            {
-                runBlocking {
-                    val apiProduct = withContext(Dispatchers.IO) { apiProducts().get(productId).data }
-                    if (apiProduct != null) {
-                        currentProduct = apiProduct
+        val productData = mapOf(
+            "product" to (intent.getStringExtra("product") ?: ""),
+            "product_id" to (intent.getStringExtra("product_id") ?: "")
+        )
+
+        try {
+
+            when{
+                productData["product"]?.isNotEmpty() == true -> {
+                    currentProduct = ProductModel.fromJson(productData["product"])
+                }
+                productData["product_id"]?.isNotEmpty() == true ->
+                {
+                    runBlocking {
+                        currentProduct = apiProducts().get(productData["product_id"] as String).data
                     }
                 }
             }
+
+        } catch (e: Exception) {
+            safeError(ProductActivity::class.java, null, getString(R.string.product_unknwown), e, productData)
         }
 
-        return currentProduct
+        if (currentProduct == null || currentProduct?.productID.isNullOrEmpty())
+        {
+            safeError(ProductActivity::class.java, null, getString(R.string.product_unknwown), ProductNotFoundException(), productData)
+        }
+
+        return currentProduct!!
     }
 
     private fun initComponentRoot() {
 
         wishlistRepo = (this.applicationContext as RandomApp).wishlistRepository
 
-        initProduct()
         initCaller()
+        initProduct()
         initToolbar()
 
         parentView = findViewById(R.id.parent_view)
@@ -164,11 +176,10 @@ abstract class ProductActivity : BaseActivity() {
 
     }
 
-    protected fun productPopulate()
+    private fun productPopulate()
     {
         ImageUtils.loadImageFromUrl(this, product.productImage as String, findViewById<ImageView>(R.id.product_image))
         findViewById<TextView>(R.id.product_name).text = product.productName
-        //findViewById<TextView>(R.id.product_name_subame).text = product.productName
         findViewById<TextView>(R.id.product_description).text = ToolsUtils.removeHtmlTags(product.productContentShort as String)
         findViewById<TextView>(R.id.product_itinerary).text = ToolsUtils.removeHtmlTags(product.productContentFull as String)
 

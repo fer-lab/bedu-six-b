@@ -5,13 +5,17 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.randomx.travel.R
 import com.randomx.travel.activity.BaseActivity
+import com.randomx.travel.activity.destination.DestinationHomeActivity
 import com.randomx.travel.fragment.CategoryProductsFragment
 import com.randomx.travel.model.CategoryModel
 import com.randomx.travel.model.CategoryViewModel
+import com.randomx.travel.model.DestinationModel
 import com.randomx.travel.model.ProductModel
 import com.randomx.travel.model.ProductsViewModel
 import com.randomx.travel.network.ApiResponse
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class CategoryActivity : BaseActivity() {
 
@@ -31,7 +35,7 @@ class CategoryActivity : BaseActivity() {
     private fun initComponent() {
 
 
-        category = CategoryModel.fromJson(intent.getStringExtra("category")?:"{}")
+        category = currentCategory()
         categoryViewModel = ViewModelProvider(this)[CategoryViewModel::class.java]
         categoryViewModel.setCategory(category)
 
@@ -43,6 +47,42 @@ class CategoryActivity : BaseActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.category_fragment_container, CategoryProductsFragment())
             .commit()
+    }
+
+    private fun currentCategory(): CategoryModel
+    {
+        var currentCategory: CategoryModel? = null
+        val categoryJson = intent.getStringExtra("category")
+        val categoryId = intent.getStringExtra("category_id")
+
+        try {
+
+            when {
+                !categoryJson.isNullOrEmpty() -> {
+
+                    currentCategory = CategoryModel.fromJson(categoryJson)
+                }
+                !categoryId.isNullOrEmpty() -> {
+                    runBlocking {
+                        currentCategory = withContext(Dispatchers.IO) { apiCategories().get(categoryId).data as CategoryModel }
+                    }
+
+                }
+            }
+        }
+        catch (e: Exception)
+        {
+            safeError(DestinationHomeActivity::class.java, null, getString(R.string.destination_unknwown), e, mapOf("destination" to categoryJson as String, "category_id" to categoryId as String))
+        }
+
+        if (currentCategory?.categoryID.isNullOrEmpty())
+        {
+            safeError(DestinationHomeActivity::class.java, null, getString(R.string.destination_unknwown), null, mapOf("destination" to categoryJson as String, "category_id" to categoryId as String))
+        }
+
+        return currentCategory!!
+
+
     }
 
     private fun getProducts(): List<ProductModel> = runBlocking {

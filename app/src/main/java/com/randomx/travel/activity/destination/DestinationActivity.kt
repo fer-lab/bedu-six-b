@@ -5,13 +5,18 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.randomx.travel.R
 import com.randomx.travel.activity.BaseActivity
+import com.randomx.travel.exceptions.DestinationNotFoundException
 import com.randomx.travel.fragment.DestinationProductsFragment
 import com.randomx.travel.model.DestinationModel
 import com.randomx.travel.model.DestinationViewModel
 import com.randomx.travel.model.ProductModel
 import com.randomx.travel.model.ProductsViewModel
 import com.randomx.travel.network.ApiResponse
+import com.randomx.travel.utils.DialogUtils
+import com.randomx.travel.utils.logUtils
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class DestinationActivity : BaseActivity() {
 
@@ -31,8 +36,7 @@ class DestinationActivity : BaseActivity() {
 
     private fun initComponent() {
 
-
-        destination = DestinationModel.fromJson(intent.getStringExtra("destination")?:"{}")
+        destination = currentDestination()
         destinationViewModel = ViewModelProvider(this)[DestinationViewModel::class.java]
         destinationViewModel.setDestination(destination)
 
@@ -47,6 +51,43 @@ class DestinationActivity : BaseActivity() {
             .replace(R.id.destination_fragment_container, DestinationProductsFragment())
             .commit()
     }
+
+    private fun currentDestination(): DestinationModel
+    {
+        var currentDestination: DestinationModel? = null
+        val destinationJson = intent.getStringExtra("destination")
+        val destinationId = intent.getStringExtra("destination_id")
+
+        try {
+
+            when {
+                !destinationJson.isNullOrEmpty() -> {
+
+                    currentDestination = DestinationModel.fromJson(destinationJson)
+                }
+                !destinationId.isNullOrEmpty() -> {
+                    runBlocking {
+                        currentDestination = withContext(Dispatchers.IO) { apiDestinations().get(destinationId).data as DestinationModel }
+                    }
+
+                }
+            }
+        }
+        catch (e: Exception)
+        {
+            safeError(DestinationHomeActivity::class.java, null, getString(R.string.destination_unknwown), e, mapOf("destinationJson" to destinationJson as String, "destinationId" to destinationId as String))
+        }
+
+        if (currentDestination?.destinationID.isNullOrEmpty())
+        {
+            safeError(DestinationHomeActivity::class.java, null, getString(R.string.destination_unknwown), null, mapOf("destinationJson" to destinationJson as String, "destinationId" to destinationId as String))
+        }
+
+        return currentDestination!!
+
+    }
+
+
 
     private fun getProducts(): List<ProductModel> = runBlocking {
         val response: ApiResponse<List<ProductModel>> = apiDestinations().getProducts(destination.destinationID.toString())

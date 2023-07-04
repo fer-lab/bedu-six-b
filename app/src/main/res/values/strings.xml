@@ -219,7 +219,10 @@
 
     <string name="wishlist_notification_title">Travel Package Added</string>
     <string name="wishlist_notification_body">We have added the tour package to your wishlist</string>
-
+    <string name="category_unknwown">Unknown Destination</string>
+    <string name="product_unknwown">Unknown Product</string>
+    <string name="destination_unknwown">Unknown Destination</string>
+    <string name="caller_unknown">Caller Not Found</string>
 
 
 </resources>

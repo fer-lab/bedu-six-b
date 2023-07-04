@@ -34,6 +34,7 @@ import com.randomx.travel.network.datasource.ProductsDataSource
 import com.randomx.travel.utils.DialogUtils
 import com.randomx.travel.utils.ToolsUtils
 import com.randomx.travel.utils.UserSessionUtils
+import com.randomx.travel.utils.logUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -160,32 +161,32 @@ abstract class BaseActivity : AppCompatActivity() {
                 // Ya estás en la HomeActivity, no es necesario iniciarla nuevamente
                 return@setOnClickListener
             }
-            ToolsUtils.goToActivity(this, HomeActivity::class.java, clearStack)
+            ToolsUtils.goToActivity(this, HomeActivity::class.java, null, clearStack)
         }
         _navbarDestinations.setOnClickListener {
             if (this is DestinationHomeActivity) {
                 // Ya estás en la DestinationHomeActivity, no es necesario iniciarla nuevamente
                 return@setOnClickListener
             }
-            ToolsUtils.goToActivity(this, DestinationHomeActivity::class.java, clearStack)
+            ToolsUtils.goToActivity(this, DestinationHomeActivity::class.java, null, clearStack)
         }
         _navbarCategories.setOnClickListener {
             if (this is CategoryHomeActivity) {
                 return@setOnClickListener
             }
-            ToolsUtils.goToActivity(this, CategoryHomeActivity::class.java, clearStack)
+            ToolsUtils.goToActivity(this, CategoryHomeActivity::class.java, null, clearStack)
         }
         _navbarTours.setOnClickListener {
             if (this is ToursHomeActivity) {
                 return@setOnClickListener
             }
-            ToolsUtils.goToActivity(this, ToursHomeActivity::class.java, clearStack)
+            ToolsUtils.goToActivity(this, ToursHomeActivity::class.java, null, clearStack)
         }
         _navbarWishlist.setOnClickListener {
             if (this is WishlistHomeActivity) {
                 return@setOnClickListener
             }
-            ToolsUtils.goToActivity(this, WishlistHomeActivity::class.java, clearStack)
+            ToolsUtils.goToActivity(this, WishlistHomeActivity::class.java, null, clearStack)
         }
 
         _navbarProfile.setOnClickListener {
@@ -404,5 +405,22 @@ abstract class BaseActivity : AppCompatActivity() {
         onBackPressed() // or any custom logic you want
     }
 
+    protected fun safeError(routeClass: Class<*>, routeExtras: Map<String, String>? = null, message: String? = null, exception: Exception? = null, params: Map<String, Any>? = null)
+    {
+
+
+        Log.e("SafeError", message ?: exception?.message ?: "Unknown error")
+        Log.e("SafeError", routeClass.toString())
+        Log.e("SafeError", this::class.java.toString())
+        Log.e("SafeError", params.toString())
+        if (exception != null)
+        {
+            logUtils.logError(exception, params)
+        }
+        ToolsUtils.goToActivity(this, routeClass, routeExtras)
+        finish()
+
+
+    }
 
 }

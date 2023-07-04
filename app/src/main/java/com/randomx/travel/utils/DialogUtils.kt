@@ -75,25 +75,9 @@ object DialogUtils {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    fun toastThenActivity(context: Context, message: String, destinationClass: Class<*>)
+    fun toastThenActivity(context: Context, message: String, destinationClass: Class<*>, extra: Map<String, String>? = null)
     {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-
-
-        // Crear un HandlerThread
-        val handlerThread = HandlerThread("MyHandlerThread")
-        handlerThread.start()
-
-        // Crear un Handler asociado al HandlerThread
-        val handler = Handler(handlerThread.looper)
-
-        // Ejecutar una acción después de cierto tiempo
-        val delayMillis = 500L // 2000 milisegundos = 2 segundos
-
-        handler.postDelayed({
-            ToolsUtils.goToActivity(context, destinationClass)
-        }, delayMillis)
-
-
+        ToolsUtils.goToActivity(context, destinationClass, extra)
     }
 }

@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkUserSession() {
         UserSessionUtils.init(this)
-        ToolsUtils.goToActivity(this, if (UserSessionUtils.isUserLogged()) HomeActivity::class.java else LoginScreen::class.java, true)
+        ToolsUtils.goToActivity(this, if (UserSessionUtils.isUserLogged()) HomeActivity::class.java else LoginScreen::class.java, null, true)
         finish()
     }
 }

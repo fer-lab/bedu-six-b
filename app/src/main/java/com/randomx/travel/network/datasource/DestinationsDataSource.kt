@@ -2,6 +2,7 @@ package com.randomx.travel.network.datasource
 
 
 import ApiClient
+import com.randomx.travel.exceptions.DestinationNotFoundException
 import com.randomx.travel.model.DestinationModel
 import com.randomx.travel.model.ProductModel
 import com.randomx.travel.network.ApiResponse
@@ -13,7 +14,15 @@ class DestinationsDataSource {
     private val destinationsApi: DestinationsApi = ApiClient.destinationsApi
 
     suspend fun get(id: String): ApiResponse<DestinationModel> {
-        return ApiResponseExtractor.extractData(destinationsApi.get(id))
+
+        val destination = ApiResponseExtractor.extractData(destinationsApi.get(id));
+
+        if (destination.data == null || destination.data.destinationID as String != id)
+        {
+            throw DestinationNotFoundException()
+        }
+
+        return destination
     }
 
     suspend fun getAll(): ApiResponse<List<DestinationModel>> {

@@ -2,6 +2,8 @@ package com.randomx.travel.network.datasource
 
 
 import ApiClient
+import com.randomx.travel.exceptions.CategoryNotFoundException
+import com.randomx.travel.exceptions.DestinationNotFoundException
 import com.randomx.travel.model.CategoryModel
 import com.randomx.travel.model.ProductModel
 import com.randomx.travel.network.ApiResponse
@@ -13,7 +15,15 @@ class CategoriesDataSource {
     private val categoriesApi: CategoriesApi = ApiClient.categoriesApi
 
     suspend fun get(id: String): ApiResponse<CategoryModel> {
-        return ApiResponseExtractor.extractData(categoriesApi.get(id))
+
+        val category = ApiResponseExtractor.extractData(categoriesApi.get(id));
+
+        if (category.data == null || category.data.categoryID as String != id)
+        {
+            throw CategoryNotFoundException()
+        }
+
+        return category
     }
 
     suspend fun getAll(): ApiResponse<List<CategoryModel>> {

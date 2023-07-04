@@ -1,10 +1,14 @@
 package com.randomx.travel.activity.category
 
 import android.widget.TextView
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.randomx.travel.R
 import com.randomx.travel.activity.product.ProductActivity
+import com.randomx.travel.exceptions.CategoryNotFoundException
 import com.randomx.travel.model.CategoryModel
 import com.randomx.travel.model.ProductCallerModel
+import com.randomx.travel.model.ProductModel
+import com.randomx.travel.utils.logUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -19,39 +23,39 @@ class CategoryProductActivity: ProductActivity() {
 
     override fun initProduct() {
 
-        val currentProduct = currentProduct()
-        if (currentProduct === null) {
-            product404(CategoryActivity::class.java)
+        try {
+            product = currentProduct() as ProductModel
+        } catch (e: Exception) {
+            safeError(CategoryActivity::class.java, mapOf("category_id" to category.categoryID as String), getString(R.string.category_unknwown), e, mapOf("category_id" to category.categoryID as String))
         }
-        else
-        {
-            product = currentProduct
-        }
+
     }
 
     override fun initCaller() {
-
-        val categoryJson = intent.getStringExtra("category")
-        val categoryId = intent.getStringExtra("category_id")
+        val categoryData = mapOf<String, String>(
+            "category" to (intent.getStringExtra("category") ?: ""),
+            "category_id" to (intent.getStringExtra("category_id") ?: ""),
+        )
 
         when {
-            categoryJson != null -> {
-                category = CategoryModel.fromJson(categoryJson)
+            categoryData["category"]?.isNotEmpty() == true -> {
+                category = CategoryModel.fromJson(categoryData["category"])
             }
-            categoryId != null -> {
+            categoryData["category_id"]?.isNotEmpty() == true -> {
                 runBlocking {
-                    val apiCategory = withContext(Dispatchers.IO) { apiCategories().get(categoryId).data }
 
-                    if (apiCategory != null) {
-                        category = apiCategory
-                    } else {
-                        product404(CategoryActivity::class.java, "Unknown category")
+                    try {
+                        category = withContext(Dispatchers.IO) { apiCategories().get(categoryData["category_id"] as String).data as CategoryModel }
+                    } catch (e: Exception)
+                    {
+                        safeError(CategoryHomeActivity::class.java, null, getString(R.string.category_unknwown), e, categoryData)
                     }
+
                 }
 
             }
             else -> {
-                product404(CategoryActivity::class.java, "Unknown category")
+                safeError(CategoryHomeActivity::class.java, null, getString(R.string.category_unknwown), CategoryNotFoundException(), categoryData)
             }
         }
 

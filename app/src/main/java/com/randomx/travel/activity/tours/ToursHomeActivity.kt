@@ -66,13 +66,13 @@ class ToursHomeActivity : BaseActivity() {
                     else
                     {
                         locationExist = false
-                        ToolsUtils.goToActivity(this, LocationErrorActivity::class.java, true)
+                        ToolsUtils.goToActivity(this, LocationErrorActivity::class.java, null, true)
                     }
 
                 }
             }
             else{
-                ToolsUtils.goToActivity(this, LocationErrorActivity::class.java, true)
+                ToolsUtils.goToActivity(this, LocationErrorActivity::class.java, null, true)
             }
         }
         else

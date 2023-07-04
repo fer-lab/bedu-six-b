@@ -61,11 +61,20 @@ object ToolsUtils {
         }
     }
 
-    fun goToActivity(context: Context, destinationClass: Class<*>, clearStack: Boolean = false) {
+    fun goToActivity(context: Context, destinationClass: Class<*>, params: Map<String, String>? = null, clearStack: Boolean = false) {
+
         val intent = Intent(context, destinationClass)
+
         if (clearStack) {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         }
+
+        if (params != null) {
+            for ((key, value) in params) {
+                intent.putExtra(key, value)
+            }
+        }
+
 
         if (context is Activity)
         {
@@ -82,7 +91,7 @@ object ToolsUtils {
             toast(context, toastMessage)
         }
 
-        goToActivity(context, MainActivity::class.java, clearStack)
+        goToActivity(context, MainActivity::class.java, null, clearStack)
     }
 
     fun toast(context: Context, message: String) {
